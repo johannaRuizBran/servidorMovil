@@ -15,15 +15,14 @@ namespace servidor.Models
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
-            string sql = "EXEC crearReporte @estadoReporteVar,@prioridadReporteVar,@fechaFinalizacionVar," +
+            string sql = "EXEC crearReporte @estadoReporteVar,@fechaFinalizacionVar," +
                 "@descripcionVar,@establecimientoVar,@idUsuarioVar;";
             SqlCommand cmd = new SqlCommand(sql, con);
-            cmd.Parameters.Add("@estadoReporteVar", System.Data.SqlDbType.Int).Value = item.estadoReporte;
-            cmd.Parameters.Add("@prioridadReporteVar", System.Data.SqlDbType.Int).Value = item.prioridadReporte;
-            cmd.Parameters.Add("@fechaFinalizacionVar", System.Data.SqlDbType.Int).Value = item.fechaFinalizacion;
-            cmd.Parameters.Add("@descripcionVar", System.Data.SqlDbType.Int).Value = item.fechaReporte;
-            cmd.Parameters.Add("@establecimientoVar", System.Data.SqlDbType.Int).Value = item.establecimiento;
-            cmd.Parameters.Add("@idUsuarioVar", System.Data.SqlDbType.Int).Value = item.nombreUsuario;            
+            cmd.Parameters.Add("@estadoReporteVar", System.Data.SqlDbType.VarChar).Value = item.estadoReporte;            
+            cmd.Parameters.Add("@fechaFinalizacionVar", System.Data.SqlDbType.Date).Value = item.fechaFinalizacion;
+            cmd.Parameters.Add("@descripcionVar", System.Data.SqlDbType.VarChar).Value = item.descripcion;
+            cmd.Parameters.Add("@establecimientoVar", System.Data.SqlDbType.VarChar).Value = item.establecimiento;
+            cmd.Parameters.Add("@idUsuarioVar", System.Data.SqlDbType.VarChar).Value = item.nombreUsuario;            
 
             int respuestaQuery = cmd.ExecuteNonQuery();
 
