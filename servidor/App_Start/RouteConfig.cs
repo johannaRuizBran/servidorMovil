@@ -140,6 +140,18 @@ namespace servidor
                 }
             );
 
+
+            //información incompleta
+            routes.MapRoute(
+                name: "informacionFaltante",
+                url: "Reportes/informacionFaltante/{idReporte}",
+                defaults: new
+                {
+                    controller = "informacionFalta",
+                    action = "informacionFaltante",
+                }
+            );
+
             ///////////////////////////////////////// nuevo ////////////////////
 
             routes.MapRoute(
