@@ -590,3 +590,36 @@ exec insertarUsuario 'Maria', '321', 'Maria', 'Rojas','Brenes', 'Maria@gmail.com
 
 
 
+
+
+
+-------- nuevo -----------------
+
+
+CREATE PROCEDURE selectReportesPrioritariosFiltro(@tipoPrioridad varchar(100))
+AS 
+BEGIN
+
+	if @tipoPrioridad = 'fecha'
+		BEGIN
+			select r.id,r.estadoReporte,r.prioridadReporte,r.fechaReporte,r.fechaFinalizacion,r.descripcion,
+			 r.establecimiento,u.nombreUsuario,(u.nombre + ' ' + u.apellido1 + ' ' +  u.apellido2) as nombre from reporte as r 
+			 inner join usuariosReporte as ur on(r.id = ur.idReporte) 
+			 inner join usuario as u on(ur.idUsuario = u.nombreUsuario) 
+			 where r.estadoReporte = 'conPrioridad' and ur.rol = 'Usuario' order by r.fechaFinalizacion
+		END
+	ELSE
+		BEGIN
+			 select r.id,r.estadoReporte,r.prioridadReporte,r.fechaReporte,r.fechaFinalizacion,r.descripcion,
+			 r.establecimiento,u.nombreUsuario,(u.nombre + ' ' + u.apellido1 + ' ' +  u.apellido2) as nombre from reporte as r 
+			 inner join usuariosReporte as ur on(r.id = ur.idReporte) 
+			 inner join usuario as u on(ur.idUsuario = u.nombreUsuario) 
+			 where r.estadoReporte = 'conPrioridad' and ur.rol = 'Usuario' 
+			 order by 
+					CASE r.prioridadReporte
+					  WHEN 'Alto' THEN 1
+					  WHEN 'Medio' THEN 2
+					  WHEN 'Bajo' THEN 3
+				   END;
+		END;		
+END;
