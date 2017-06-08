@@ -623,3 +623,10 @@ BEGIN
 				   END;
 		END;		
 END;
+
+--insertar --
+EXEC crearReporte 'conPrioridad','Alto','05-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+EXEC crearReporte 'conPrioridad','Medio','05-10-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+EXEC crearReporte 'conPrioridad','Medio','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+
+EXEC crearReporte 'conPrioridad','Bajo','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
