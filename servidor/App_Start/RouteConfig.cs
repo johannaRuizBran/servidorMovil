@@ -152,7 +152,7 @@ namespace servidor
                 }
             );
 
-            ///////////////////////////////////////// nuevo ////////////////////
+            // lista de reportes segun estado del reporte
 
             routes.MapRoute(
                 name: "AccesoReportesListaReportesEstado",
@@ -161,6 +161,18 @@ namespace servidor
                 {
                     controller = "reporte",
                     action = "obtenerInfoReportesEstadoAction",
+                }
+            );
+
+            // obtener lista de reportes priorizados segun el filtro seleccionado
+
+            routes.MapRoute(
+                name: "AccesoReportesListaReportesPriorizadosFiltro",
+                url: "Reporte/obtenerListaReportesPriorizadosFiltro/{tipo}",
+                defaults: new
+                {
+                    controller = "reporte",
+                    action = "obtenerListaReportesPriorizadosFiltroAction",
                 }
             );
         }

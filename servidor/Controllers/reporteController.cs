@@ -37,6 +37,16 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpGet]
+        public JsonResult obtenerReporteInformacion(int idReporte)
+        {
+            return Json(reporte.obtenerReporteInformacion(idReporte),
+                        JsonRequestBehavior.AllowGet);
+        }
+
+
+
         //obtiene la lista de reportes pertenecientes a un estado en especifico ("enProceso","nuevo", y demas)
         [HttpGet]
         public JsonResult obtenerInfoReportesEstadoAction(string estadoReporte)
@@ -45,12 +55,14 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
-        
+
+        //obtiene la lista de reportes con proriedad, tomando en consideracion un filtro de importancia("fecha",'Admin')
         [HttpGet]
-        public JsonResult obtenerReporteInformacion(int idReporte)
+        public JsonResult obtenerListaReportesPriorizadosFiltroAction(string tipo)
         {
-            return Json(reporte.obtenerReporteInformacion(idReporte),
+            return Json(reporte.obtenerListaReportesPriorizadosFiltro(tipo),
                         JsonRequestBehavior.AllowGet);
         }
+
     }
 }

@@ -170,5 +170,48 @@ namespace servidor.Models
             reader.Close();
             return registroReporte;
         }
+
+        //obtiene la lista de reportes con proriedad, tomando en consideracion un filtro de importancia("fecha",'Admin')
+        public List<Reporte> obtenerListaReportesPriorizadosFiltro(string tipo)
+        {
+            List<Reporte> lista = new List<Reporte>();
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec selectReportesPrioritariosFiltro @tipoFiltro";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@tipoFiltro", System.Data.SqlDbType.VarChar).Value = tipo;
+
+            SqlDataReader reader =
+                cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (reader.Read())
+            {
+                Reporte registroReporte = new Reporte();
+
+                registroReporte = new Reporte();
+                registroReporte.id = reader.GetInt32(0);
+                registroReporte.estadoReporte = reader.GetString(1);
+                if (!reader.IsDBNull(2))
+                {
+                    registroReporte.prioridadReporte = reader.GetString(2);
+                }
+                else
+                {
+                    registroReporte.prioridadReporte = "";
+                }
+                registroReporte.fechaReporte = reader.GetDateTime(3).ToString("yyyy/MM/dd");
+                registroReporte.fechaFinalizacion = reader.GetDateTime(4).ToString("yyyy/MM/dd"); ;
+                registroReporte.descripcion = reader.GetString(5);
+                registroReporte.establecimiento = reader.GetString(6);
+                registroReporte.nombreUsuario = reader.GetString(7);
+                registroReporte.nombre = reader.GetString(8);
+
+
+                lista.Add(registroReporte);
+            }
+            reader.Close();
+            return lista;
+        }
     }
 }
