@@ -593,7 +593,7 @@ exec insertarUsuario 'Maria', '321', 'Maria', 'Rojas','Brenes', 'Maria@gmail.com
 
 
 
--------- nuevo -----------------
+-------- nuevo ------------------
 
 
 CREATE PROCEDURE selectReportesPrioritariosFiltro(@tipoPrioridad varchar(100))
