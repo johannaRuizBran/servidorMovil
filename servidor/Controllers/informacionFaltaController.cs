@@ -23,5 +23,12 @@ namespace servidor.Controllers
             return Json(informacion.informacionFaltante(idReporte),
                         JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult solicitarMasInformacionReporteAction(int idReporte,string infomacion)
+        {
+            return Json(informacion.solicitarMasInformacionReporte(idReporte,infomacion),
+                        JsonRequestBehavior.AllowGet);
+        }
     }
 }

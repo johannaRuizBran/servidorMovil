@@ -175,6 +175,18 @@ namespace servidor
                     action = "obtenerListaReportesPriorizadosFiltroAction",
                 }
             );
+
+            // solicita mas informacion de un reporte
+
+            routes.MapRoute(
+                name: "AccesoReportesSolicitarInformacion",
+                url: "Reporte/reportesSolicitarInformacion/{idReporte}/{informacion}",
+                defaults: new
+                {
+                    controller = "informacionFalta",
+                    action = "solicitarMasInformacionReporteAction",
+                }
+            );
         }
     }
 }
