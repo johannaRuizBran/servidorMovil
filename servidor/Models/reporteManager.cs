@@ -230,5 +230,23 @@ namespace servidor.Models
             con.Close();
             return (respuestaQuery == 1);
         }
+
+
+        // asigna un tecnico a un reporte
+        public bool actualizarPrioridad(int idReporte, string fechaFinalizacion,string nivelPrioridad)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+            string sql = "EXEC modificarFechaYPrioridadReporte  @idReporte,@fechaFinalizacion,@nivelPrioridad";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+            cmd.Parameters.Add("@fechaFinalizacion", System.Data.SqlDbType.Date).Value = fechaFinalizacion;
+            cmd.Parameters.Add("@nivelPrioridad", System.Data.SqlDbType.VarChar).Value = nivelPrioridad;
+
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 1);
+        }
     }
 }

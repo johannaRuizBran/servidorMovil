@@ -74,5 +74,14 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+
+        //actualizar prioridad reporte
+        [HttpPost]
+        public JsonResult actualizarPrioridadAction(int idReporte, string fechaFinalizacion, string nivelPrioridad)
+        {
+            return Json(reporte.actualizarPrioridad(idReporte, fechaFinalizacion, nivelPrioridad),
+                        JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

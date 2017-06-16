@@ -216,6 +216,19 @@ namespace servidor
                     action = "asignarTecnicoReporteAction",
                 }
             );
+
+
+
+            //actuliza la prioridad de un reporte
+            routes.MapRoute(
+                name: "AccesoActualizarPrioridadReporte",
+                url: "Reporte/actualizarPrioridad/{idReporte}/{fechaFinalizacion}/{nivelPrioridad}",
+                defaults: new
+                {
+                    controller = "reporte",
+                    action = "actualizarPrioridadAction",
+                }
+            );
         }
     }
 }
