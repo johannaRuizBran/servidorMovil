@@ -220,10 +220,11 @@ namespace servidor.Models
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
-            string sql = "EXEC insertarUsuariosReporte  @idReporte,@idUsuario";
+            string sql = "EXEC insertarUsuariosReporte  @idReporte,@idUsuario,@rol";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
             cmd.Parameters.Add("@idUsuario", System.Data.SqlDbType.VarChar).Value = idUsuario;
+            cmd.Parameters.Add("@rol", System.Data.SqlDbType.VarChar).Value = "Tecnico";
 
             int respuestaQuery = cmd.ExecuteNonQuery();
 
@@ -233,16 +234,16 @@ namespace servidor.Models
 
 
         // asigna un tecnico a un reporte
-        public bool actualizarPrioridad(int idReporte, string fechaFinalizacion,string nivelPrioridad)
+
+        public bool actualizarPrioridad(int idReporte, string fechaFinalizacion, string nivelPrioridad)
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
-            string sql = "EXEC modificarFechaYPrioridadReporte  @idReporte,@nivelPrioridad,@fechaFinalizacion";
+            string sql = "EXEC modificarFechaYPrioridadReporte @idReporte,@nivelPrioridad,@fechaFinalizacion";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
-            cmd.Parameters.Add("@fechaFinalizacion", System.Data.SqlDbType.Date).Value = fechaFinalizacion;
             cmd.Parameters.Add("@nivelPrioridad", System.Data.SqlDbType.VarChar).Value = nivelPrioridad;
-
+            cmd.Parameters.Add("@fechaFinalizacion", System.Data.SqlDbType.Date).Value = fechaFinalizacion;
             int respuestaQuery = cmd.ExecuteNonQuery();
 
             con.Close();
