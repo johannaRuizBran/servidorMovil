@@ -72,14 +72,14 @@ namespace servidor.Models
         }
 
         //cancelar reporte
-        public bool cancelarReporteUsuario(int idReporte)
+        public bool cambiarEstadoReporte(int idReporte, string estado)
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();             
-            string sql = "update reporte set estadoReporte= 'Cancelado' where id= @idReporte";
+            string sql = "update reporte set estadoReporte= @estado where id= @idReporte";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
-
+            cmd.Parameters.Add("@estado", System.Data.SqlDbType.VarChar).Value = estado;
             int respuestaQuery = cmd.ExecuteNonQuery();
 
             con.Close();

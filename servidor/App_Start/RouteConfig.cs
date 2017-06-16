@@ -131,12 +131,12 @@ namespace servidor
 
             //Cancelar Reporte
             routes.MapRoute(
-                name: "cancelarReporteUsuario",
-                url: "Reportes/Cancelar/{idReporte}",
+                name: "cambiarEstadoReporte",
+                url: "Reportes/cambiarEstado/{idReporte}/{estado}",
                 defaults: new
                 {
                     controller = "reporte",
-                    action = "cancelarReporteUsuario",
+                    action = "cambiarEstadoReporte",
                 }
             );
 
@@ -176,15 +176,30 @@ namespace servidor
                 }
             );
 
+            ///////////////////////////   INFORMACION FALTANTE
+
+
             // solicita mas informacion de un reporte
 
             routes.MapRoute(
                 name: "AccesoReportesSolicitarInformacion",
-                url: "Reporte/reportesSolicitarInformacion/{idReporte}/{informacion}",
+                url: "Reporte/reportesSolicitarInformacion/{idReporte}/{infomacion}",
                 defaults: new
                 {
                     controller = "informacionFalta",
                     action = "solicitarMasInformacionReporteAction",
+                }
+            );
+
+
+            // insertar mas infromacion de reporte
+            routes.MapRoute(
+                name: "AccesoAgregarMasInformacion",
+                url: "Reportes/informacionFaltante/agregar/{idReporte}/{infomacion}",
+                defaults: new
+                {
+                    controller = "informacionFalta",
+                    action = "agregarMasInformacionFunc",
                 }
             );
         }

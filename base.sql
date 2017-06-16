@@ -196,7 +196,7 @@ GO
 
 --crear reporte
 
-CREATE PROCEDURE crearReporte( 
+CREATE PROCEDURE crearReporte(
 									@estadoReporteVar VARCHAR(100),									
 									@fechaFinalizacionVar DATE, 
 									@descripcionVar VARCHAR(500),
@@ -624,9 +624,77 @@ BEGIN
 		END;		
 END;
 
---insertar ---
-EXEC crearReporte 'conPrioridad','Alto','05-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
-EXEC crearReporte 'conPrioridad','Medio','05-10-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
-EXEC crearReporte 'conPrioridad','Medio','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
 
-EXEC crearReporte 'conPrioridad','Bajo','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+
+
+
+
+@estadoReporteVar VARCHAR(100),									
+									@fechaFinalizacionVar DATE, 
+									@descripcionVar VARCHAR(500),
+									@establecimientoVar VARCHAR(100),
+									@idUsuarioVar	VARCHAR(100)
+
+
+--insertar ---
+
+select * from reporte
+EXEC crearReporte 'conPrioridad','05-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+EXEC crearReporte 'conPrioridad','05-10-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';						
+
+
+
+
+
+
+----__________________________________________________________________________
+
+use mantenimiento
+
+select * from reporte
+exec solicitudMasInformacionReporte 6, 'Cuál versíón de Ruby'
+exec solicitudMasInformacionReporte 3, 'Indicar cuál versión de Python e indicar como cuándo se realizará exactamente'
+exec solicitudMasInformacionReporte 24, 'Indicar cuál versión para poder instalar'
+select * from reporte where estadoReporte= 'informacion'
+select * from reporte_informacion
+select * from reporte
+update reporte set estadoReporte= 'informacion' where id= 34
+
+
+drop procedure actualizarInformacionReporte
+
+exec actualizarInformacionReporte 3, 'es la nuemro 2'
+
+
+
+CREATE PROCEDURE actualizarInformacionReporte(@idReporte int, @descripcion varchar(500))
+AS 
+DECLARE
+	@descripcionAntigua varchar(500)
+BEGIN	
+	set @descripcionAntigua= (select descripcion from reporte where id= @idReporte);
+	DELETE FROM reporte_informacion WHERE idReporte= @idReporte;
+	update reporte set descripcion= @descripcionAntigua + ' '+ @descripcion where id= @idReporte;
+	update reporte set estadoReporte= 'nuevo' where id= @idReporte;
+END;
+
+
+
+
+
+CREATE PROCEDURE solicitudMasInformacionReporte( 
+									@idReporteVar int,									
+									@informacionVar VARCHAR(500)
+								)
+as
+DECLARE
+	@ultimoRegistro INT
+BEGIN
+	INSERT INTO reporte_informacion(idReporte,observacion)
+		VALUES(@idReporteVar,@informacionVar);
+END;
+
+
+

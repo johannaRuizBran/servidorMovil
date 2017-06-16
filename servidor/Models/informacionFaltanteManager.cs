@@ -52,5 +52,21 @@ namespace servidor.Models
             con.Close();
             return (respuestaQuery == 1);
         }
+            
+        
+        public bool agregarMasInformacion(int idReporte, string informacion)
+        {            
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+            string sql = "EXEC actualizarInformacionReporte @idReporte,@informacion";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+            cmd.Parameters.Add("@informacion", System.Data.SqlDbType.VarChar).Value = informacion;
+
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 3);
+        }
     }
 }

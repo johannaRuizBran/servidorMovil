@@ -31,9 +31,9 @@ namespace servidor.Controllers
         }
 
         [HttpPost]
-        public JsonResult cancelarReporteUsuario(int idReporte)
+        public JsonResult cambiarEstadoReporte(int idReporte, string estado)
         {
-            return Json(reporte.cancelarReporteUsuario(idReporte),
+            return Json(reporte.cambiarEstadoReporte(idReporte, estado),
                         JsonRequestBehavior.AllowGet);
         }
 

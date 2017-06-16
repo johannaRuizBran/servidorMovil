@@ -25,10 +25,16 @@ namespace servidor.Controllers
         }
 
         [HttpPost]
-        public JsonResult solicitarMasInformacionReporteAction(int idReporte,string infomacion)
+        public JsonResult solicitarMasInformacionReporteAction(int idReporte, string infomacion)
         {
-            return Json(informacion.solicitarMasInformacionReporte(idReporte,infomacion),
+            return Json(informacion.solicitarMasInformacionReporte(idReporte, infomacion),
                         JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult agregarMasInformacionFunc(int idReporte, string infomacion)
+        {
+            return Json(informacion.agregarMasInformacion(idReporte, infomacion));
+        }        
     }
 }
