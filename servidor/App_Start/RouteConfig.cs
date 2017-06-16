@@ -202,6 +202,20 @@ namespace servidor
                     action = "agregarMasInformacionFunc",
                 }
             );
+
+
+
+            // asigna un tecnico a un reporte
+
+            routes.MapRoute(
+                name: "AccesoReporteAsignarTecnico",
+                url: "Reporte/asignarTecnico/{idReporte}/{idUsuario}",
+                defaults: new
+                {
+                    controller = "reporte",
+                    action = "asignarTecnicoReporteAction",
+                }
+            );
         }
     }
 }
