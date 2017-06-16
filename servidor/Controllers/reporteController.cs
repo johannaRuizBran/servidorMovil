@@ -68,7 +68,7 @@ namespace servidor.Controllers
 
         //asigna un tecnico a un reporte
         [HttpPost]
-        public JsonResult asignarTecnicoReporteAction(int idReporte, int idUsuario)
+        public JsonResult asignarTecnicoReporteAction(int idReporte, string idUsuario)
         {
             return Json(reporte.asignarTecnicoReporte(idReporte, idUsuario),
                         JsonRequestBehavior.AllowGet);

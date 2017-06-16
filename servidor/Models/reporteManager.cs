@@ -216,7 +216,7 @@ namespace servidor.Models
 
 
         // asigna un tecnico a un reporte
-        public bool asignarTecnicoReporte(int idReporte, int idUsuario)
+        public bool asignarTecnicoReporte(int idReporte, string idUsuario)
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
