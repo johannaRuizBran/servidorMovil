@@ -237,7 +237,7 @@ namespace servidor.Models
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
-            string sql = "EXEC modificarFechaYPrioridadReporte  @idReporte,@fechaFinalizacion,@nivelPrioridad";
+            string sql = "EXEC modificarFechaYPrioridadReporte  @idReporte,@nivelPrioridad,@fechaFinalizacion";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
             cmd.Parameters.Add("@fechaFinalizacion", System.Data.SqlDbType.Date).Value = fechaFinalizacion;
