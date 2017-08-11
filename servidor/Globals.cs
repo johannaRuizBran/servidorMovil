@@ -8,7 +8,7 @@ namespace servidor
     public class Globals
     {
         
-        private static string ip = @"Data Source=172.24.40.130;Initial Catalog=mantenimiento;User Id=sa;Password=123";
+        private static string ip = @"Data Source=172.24.47.89;Initial Catalog=mantenimiento;User Id=sa;Password=123";
 
         public static string IP
         {

@@ -180,7 +180,6 @@ namespace servidor
 
 
             // solicita mas informacion de un reporte
-
             routes.MapRoute(
                 name: "AccesoReportesSolicitarInformacion",
                 url: "Reporte/reportesSolicitarInformacion/{idReporte}/{infomacion}",
@@ -205,8 +204,7 @@ namespace servidor
 
 
 
-            // asigna un tecnico a un reporte
-
+            // asigna un tecnico a un reporte       
             routes.MapRoute(
                 name: "AccesoReporteAsignarTecnico",
                 url: "Reporte/asignarTecnico/{idReporte}/{idUsuario}",

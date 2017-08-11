@@ -31,16 +31,6 @@ CREATE TABLE computadora(
 	CONSTRAINT CK_computadora_establecimiento CHECK(establecimiento in ('LAB-01','LAB-02','Miniauditorio','Moviles','SIRZEE')),
 );
 
-
-
-
-CREATE TABLE reporte_informacion(
-	idReporte INT PRIMARY KEY,	
-	observacion VARCHAR(500) NOT NULL
-	CONSTRAINT FK_idreporte_reporte_informacion FOREIGN KEY(idReporte) REFERENCES reporte ON DELETE CASCADE ON UPDATE CASCADE	
-);
-
-
 CREATE TABLE reporte(
 	id INT IDENTITY(1,1) PRIMARY KEY,
 	estadoReporte VARCHAR(100) not null,
@@ -52,6 +42,13 @@ CREATE TABLE reporte(
 	CONSTRAINT CK_reporte_estadoReporte CHECK(estadoReporte in ('Cancelado','Finalizado','enProceso','conPrioridad','nuevo','informacion')),
 	CONSTRAINT CK_reporte_prioridadReporte CHECK(prioridadReporte in ('Alto','Medio','Bajo')),
 	CONSTRAINT CK_reporte_establecimiento CHECK(establecimiento in ('LAB-01','LAB-02','Miniauditorio','Moviles','SIRZEE'))
+);
+
+
+CREATE TABLE reporte_informacion(
+	idReporte INT PRIMARY KEY,	
+	observacion VARCHAR(500) NOT NULL
+	CONSTRAINT FK_idreporte_reporte_informacion FOREIGN KEY(idReporte) REFERENCES reporte ON DELETE CASCADE ON UPDATE CASCADE	
 );
 
 
@@ -303,6 +300,8 @@ END;
 
 go
 
+
+
 --insertar
 CREATE PROCEDURE insertarUsuariosReporte(
 									@idReporteVar INT, 
@@ -328,6 +327,7 @@ BEGIN
 END;
 
 GO
+
 
 --FUNCIONES DETALLE REPORTE
 
@@ -578,10 +578,15 @@ select*from usuario
 INSERT INTO usuario(nombreUsuario,contrasena,nombre,apellido1,apellido2,correo,telefono,rol,activo)
 values('RosendaCVffdfddCV', '12V3', 'RosenVda', 'Rosales','Vargas', 'rose@gmail.com', '85649475','Operador','No')
 
-
+select * from usuario
 
 use mantenimiento
-exec insertarUsuario 'RosendaCVddCV', '12V3', 'RosenVda', 'Rosales','Vargas', 'rose@gmail.com', '85649475','Operador','N';
+exec insertarUsuario 'Pamela', 'Pamela', 'Pamela', 'Pamea','Vargas', 'Pamela@gmail.com', '85649475','Tecnico','S';
+exec insertarUsuario 'Claudia', 'Claudia', 'Carranza', 'Perez','Brenes', 'Clau@gmail.com', '85649475','Tecnico','S';
+exec insertarUsuario 'Anmador', 'Anmador', 'Palmares', 'Rolcio','Vargas', 'Anmador@gmail.com', '85649475','Tecnico','S';
+exec insertarUsuario 'Sara', 'Sara', 'Pamela', 'Hernández','Vargas', 'Hernandez@gmail.com', '85649475','Tecnico','S';
+exec insertarUsuario 'Roberthod', 'Roberthod', 'Olivares', 'Valles','Valles', 'Valles@gmail.com', '85649475','Tecnico','S';
+
 exec insertarUsuario 'Alvarado', '1234', 'Alvo', 'Mendez','Ortega', 'Ortega@gmail.com', '85352475','Profesor','S';
 exec insertarUsuario 'Brenda', '123', 'Brenda', 'Mora','Salazar', 'bmr@gmail.com', '85644778','Tecnico','S';
 exec insertarUsuario 'Jenny', '312', 'Jenny', 'Quesada','Cubillo', 'jqc@gmail.com', '88649413','Administrador','S';
@@ -638,7 +643,7 @@ END;
 
 --insertar ---
 
-select * from reporte
+select * from usuario
 EXEC crearReporte 'conPrioridad','05-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
 EXEC crearReporte 'conPrioridad','05-10-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
 EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
@@ -654,13 +659,15 @@ EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras d
 use mantenimiento
 
 select * from reporte
-exec solicitudMasInformacionReporte 6, 'Cuál versíón de Ruby'
+exec solicitudMasInformacionReporte 4, 'Cuál versíón de Ruby'
 exec solicitudMasInformacionReporte 3, 'Indicar cuál versión de Python e indicar como cuándo se realizará exactamente'
 exec solicitudMasInformacionReporte 24, 'Indicar cuál versión para poder instalar'
 select * from reporte where estadoReporte= 'informacion'
 select * from reporte_informacion
 select * from reporte
-update reporte set estadoReporte= 'informacion' where id= 34
+
+
+update reporte set estadoReporte= 'informacion' where id=4
 
 
 drop procedure actualizarInformacionReporte
@@ -668,7 +675,7 @@ drop procedure actualizarInformacionReporte
 exec actualizarInformacionReporte 3, 'es la nuemro 2'
 
 
-
+select * from reporte where id = 8
 CREATE PROCEDURE actualizarInformacionReporte(@idReporte int, @descripcion varchar(500))
 AS 
 DECLARE
@@ -680,7 +687,7 @@ BEGIN
 	update reporte set estadoReporte= 'nuevo' where id= @idReporte;
 END;
 
-
+exec modificarFechaYPrioridadReporte 8,'Alto'
 
 
 
