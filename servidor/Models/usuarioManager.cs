@@ -231,16 +231,13 @@ namespace servidor.Models
 
             try
             {
-                string applicationID = appID;
-                string senderId = senderID;
-                string deviceId = deviceID;
 
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";
                 var data = new
                 {
-                    to = deviceId,
+                    to = deviceID,
                     notification = new
                     {
                         body = mensaje,
@@ -252,8 +249,8 @@ namespace servidor.Models
                 var serializer = new JavaScriptSerializer();
                 var json = serializer.Serialize(data);
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
-                tRequest.Headers.Add(string.Format("Authorization: key={0}", applicationID));
-                tRequest.Headers.Add(string.Format("Sender: id={0}", senderId));
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", appID));
+                tRequest.Headers.Add(string.Format("Sender: id={0}", senderID));
                 tRequest.ContentLength = byteArray.Length;
                 using (Stream dataStream = tRequest.GetRequestStream())
                 {
