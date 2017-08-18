@@ -710,9 +710,26 @@ END;
 ------------------------------------------------------------- nuevo..... funciones para push
 
 
-
 CREATE TABLE usuario_token(
 	nombreUsuario VARCHAR(100) NOT NULL PRIMARY KEY,
 	token VARCHAR(600) NOT NULL,
 	CONSTRAINT FK_usuarioToken_nombreUsuario FOREIGN KEY(nombreUsuario) REFERENCES usuario ON DELETE CASCADE ON UPDATE CASCADE
 )
+
+select * from usuario_token where nombreUsuario='Alvarado'
+
+CREATE PROCEDURE actualizarTokenUsuario(@nombreUsuarioVar varchar(100), @tokenVar varchar(600))
+AS 
+BEGIN	
+	IF (NOT EXISTS(SELECT * FROM usuario_token where nombreUsuario=@nombreUsuarioVar))
+		BEGIN
+			INSERT INTO usuario_token VALUES(@nombreUsuarioVar,@tokenVar);
+		END 
+	ELSE
+	BEGIN
+		UPDATE usuario_token
+						SET token = @tokenVar 
+						WHERE nombreUsuario = @nombreUsuarioVar;
+	END
+END
+
