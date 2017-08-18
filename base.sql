@@ -705,3 +705,14 @@ END;
 
 
 
+
+
+------------------------------------------------------------- nuevo..... funciones para push
+
+
+
+CREATE TABLE usuario_token(
+	nombreUsuario VARCHAR(100) NOT NULL PRIMARY KEY,
+	token VARCHAR(600) NOT NULL,
+	CONSTRAINT FK_usuarioToken_nombreUsuario FOREIGN KEY(nombreUsuario) REFERENCES usuario ON DELETE CASCADE ON UPDATE CASCADE
+)
