@@ -242,7 +242,7 @@ namespace servidor
                 defaults: new
                 {
                     controller = "usuario",
-                    action = "enviarMensajePushAction"
+                    action = "actualizarTokenPushNotf"
                 }
             );
 

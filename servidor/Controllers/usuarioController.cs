@@ -81,7 +81,12 @@ namespace servidor.Controllers
             return Json(usuarioManager.enviarMensajePush(appID, senderID, deviceID, mensaje));
         }
 
-
+        //actualizar token
+        [HttpPost]
+        public JsonResult actualizarTokenPushNotf(string nombreUsuario, string id)
+        {
+            return Json(usuarioManager.actualizarTokenPushNotf(nombreUsuario, id));
+        }
 
     }
 }
