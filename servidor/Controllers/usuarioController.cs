@@ -69,5 +69,19 @@ namespace servidor.Controllers
             }
             return Json(new { Error = true, Message = "Operación HTTP desconocida" });
         }
+
+
+        //nuevo funciones push
+
+
+        //enviar mensaje
+        [HttpPost]
+        public JsonResult enviarMensajePushAction(string appID, string senderID, string deviceID, string mensaje)
+        {
+            return Json(usuarioManager.enviarMensajePush(appID, senderID, deviceID, mensaje));
+        }
+
+
+
     }
 }

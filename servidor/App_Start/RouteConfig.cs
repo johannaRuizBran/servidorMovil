@@ -227,6 +227,25 @@ namespace servidor
                     action = "actualizarPrioridadAction",
                 }
             );
+
+
+
+
+
+            ///////////////////////////////////////////////////
+            ///////////////////// FUNCIONES PUSH
+            ///////////////////////////////////////////////////
+
+            routes.MapRoute(
+                name: "AccesoEnviarMensajePush",
+                url: "Usuarios/enviarMensajePush/{appID}/{senderID}/{deviceID}/{mensaje}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "enviarMensajePushAction"
+                }
+            );
+
         }
     }
 }

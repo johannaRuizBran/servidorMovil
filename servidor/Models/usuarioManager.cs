@@ -4,6 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 
+
+//nuevas push
+
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Web.Script.Serialization;
+
+
 namespace servidor.Models
 {
     public class usuarioManager
@@ -201,6 +210,73 @@ namespace servidor.Models
             }
             reader.Close();
             return usuarioLog;
+        }
+
+
+
+
+        /// nuevas funciones del push
+
+
+        //enviar el mensaje
+        public bool enviarMensajePush(string appID, string senderID, string deviceID, string mensaje)
+        {
+
+            appID = "AAAAU-NQ3Ak:APA91bE09KiPNvglm_JW6J25YXBF1crW94fEAjQPcXxEONIsskszOAtUUvBXmOInMf_XwXX3tqabswj6bHIEqJ4iX0BrfrMCDnbVEZjvda6q0hylyfNCxDh0FtIBdX6smRaWu9P9hXwH";
+
+            senderID = "360296012809";
+
+            deviceID = "cb8YaDz6RIM:APA91bFfccigQQaNbHgsG_LmFz8UqoAzYSGEtadG6AfA98UFeugKD6jc_-LCOjY1QWP4yD9NsoP9Q1YQOEbevymQiozCN6hcvDrlSCv707pzHIM4hSQViuUzuS6euQ9w41Qr9Oicac2k";
+
+
+            try
+            {
+                string applicationID = appID;
+                string senderId = senderID;
+                string deviceId = deviceID;
+
+                WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                var data = new
+                {
+                    to = deviceId,
+                    notification = new
+                    {
+                        body = mensaje,
+                        title = "AlBaami",
+                        sound = "Enabled"
+
+                    }
+                };
+                var serializer = new JavaScriptSerializer();
+                var json = serializer.Serialize(data);
+                Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", applicationID));
+                tRequest.Headers.Add(string.Format("Sender: id={0}", senderId));
+                tRequest.ContentLength = byteArray.Length;
+                using (Stream dataStream = tRequest.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    using (WebResponse tResponse = tRequest.GetResponse())
+                    {
+                        using (Stream dataStreamResponse = tResponse.GetResponseStream())
+                        {
+                            using (StreamReader tReader = new StreamReader(dataStreamResponse))
+                            {
+                                String sResponseFromServer = tReader.ReadToEnd();
+                                string str = sResponseFromServer;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string str = ex.Message;
+            }
+            return false;
         }
 
     }
