@@ -237,6 +237,17 @@ namespace servidor
             ///////////////////////////////////////////////////
 
             routes.MapRoute(
+                name: "ActualizartokenIdPush",
+                url: "Usuarios/actualizarTokenPush/{nombreUsuario}/{id}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "enviarMensajePushAction"
+                }
+            );
+
+
+            routes.MapRoute(
                 name: "AccesoEnviarMensajePush",
                 url: "Usuarios/enviarMensajePush/{appID}/{senderID}/{deviceID}/{mensaje}",
                 defaults: new

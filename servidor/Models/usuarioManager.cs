@@ -221,17 +221,11 @@ namespace servidor.Models
         //enviar el mensaje
         public bool enviarMensajePush(string appID, string senderID, string deviceID, string mensaje)
         {
-
             appID = "AAAAU-NQ3Ak:APA91bE09KiPNvglm_JW6J25YXBF1crW94fEAjQPcXxEONIsskszOAtUUvBXmOInMf_XwXX3tqabswj6bHIEqJ4iX0BrfrMCDnbVEZjvda6q0hylyfNCxDh0FtIBdX6smRaWu9P9hXwH";
-
             senderID = "360296012809";
-
             deviceID = "cb8YaDz6RIM:APA91bFfccigQQaNbHgsG_LmFz8UqoAzYSGEtadG6AfA98UFeugKD6jc_-LCOjY1QWP4yD9NsoP9Q1YQOEbevymQiozCN6hcvDrlSCv707pzHIM4hSQViuUzuS6euQ9w41Qr9Oicac2k";
-
-
             try
             {
-
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";
@@ -243,7 +237,6 @@ namespace servidor.Models
                         body = mensaje,
                         title = "AlBaami",
                         sound = "Enabled"
-
                     }
                 };
                 var serializer = new JavaScriptSerializer();
@@ -276,5 +269,21 @@ namespace servidor.Models
             return false;
         }
 
+        //actulizar token id para push notification
+        public bool actualizarTokenPushNotf(string nombreUsuario, string id)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+            string sql = "exec actualizarTokenUsuario "
+                + "@nombreUsuario,"
+                + "@id";
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@nombreUsuario", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.VarChar).Value = id;          
+            int respuestaQuery = cmd.ExecuteNonQuery();
+            con.Close();
+            return (respuestaQuery == 1);
+        }
     }
 }
