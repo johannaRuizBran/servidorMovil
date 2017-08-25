@@ -247,6 +247,8 @@ namespace servidor
             );
 
 
+
+            //envia un mensaje al usuairo segun la direccion del id app,id usuario
             routes.MapRoute(
                 name: "AccesoEnviarMensajePush",
                 url: "Usuarios/enviarMensajePush/{appID}/{senderID}/{deviceID}/{mensaje}",
@@ -256,6 +258,19 @@ namespace servidor
                     action = "enviarMensajePushAction"
                 }
             );
+
+
+            //obtener el token del usuario
+            routes.MapRoute(
+                name: "AccesoObtenerTokenUsuario",
+                url: "Usuarios/obtenerTokenUsuario/{nombreUsuario}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "obtenerTokenUsuarioAction"
+                }
+            );
+
 
         }
     }

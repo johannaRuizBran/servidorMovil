@@ -88,5 +88,14 @@ namespace servidor.Controllers
             return Json(usuarioManager.actualizarTokenPushNotf(nombreUsuario, id));
         }
 
+        //obtener el token del usuario (id del telefono especifico)
+        [HttpGet]
+        public JsonResult obtenerTokenUsuarioAction(string nombreUsuario)
+        {
+            return Json(usuarioManager.obtenerTokenUsuario(nombreUsuario),
+                        JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

@@ -269,6 +269,10 @@ namespace servidor.Models
             return false;
         }
 
+
+        //funciones nuevas para push
+
+
         //actulizar token id para push notification
         public bool actualizarTokenPushNotf(string nombreUsuario, string id)
         {
@@ -284,6 +288,28 @@ namespace servidor.Models
             int respuestaQuery = cmd.ExecuteNonQuery();
             con.Close();
             return (respuestaQuery == 1);
+        }
+
+
+        //funcion que devuelve el token segun el id de usuario enviado
+        public string obtenerTokenUsuario(string nombreUsuario)
+        {
+            string token = null;
+
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec obtenerTokenUsuario @nombreUsuarioVar";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@nombreUsuarioVar", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
+            SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            if (reader.Read())
+            {
+                token = reader.GetString(1);
+            }
+            reader.Close();
+            return token;
         }
     }
 }
