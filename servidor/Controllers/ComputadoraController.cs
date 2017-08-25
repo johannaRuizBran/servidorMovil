@@ -22,5 +22,11 @@ namespace servidor.Controllers
             return Json(computadora.listaPCs(nombreLab),
                         JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult actualizarColor(int idReporte, int idPC, string color)
+        {
+            return Json(computadora.actualizarColor(idReporte, idPC, color));
+        }
     }
 }

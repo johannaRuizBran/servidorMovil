@@ -105,6 +105,18 @@ namespace servidor
                 }
             );
 
+            routes.MapRoute(
+                name: "actualizarColorPC",
+                url: "informacionFaltante/actualizarColorPC/{idReporte}/{idPC}/{color}",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "actualizarColor",
+                }
+            );
+
+            //
+
 
             /////////////////////////////   REPORTES    /////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////

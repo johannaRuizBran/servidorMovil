@@ -41,5 +41,21 @@ namespace servidor.Models
             reader.Close();
             return lista;
         }
+
+        public bool actualizarColor(int idReporte, int idPC, string color)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+            string sql = "EXEC actualirColorPc @idReporte,@idPC,@color";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+            cmd.Parameters.Add("@idPC", System.Data.SqlDbType.Int).Value = idPC;
+            cmd.Parameters.Add("@color", System.Data.SqlDbType.VarChar).Value = color;
+
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 3);
+        }
     }
 }
