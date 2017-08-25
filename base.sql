@@ -733,3 +733,16 @@ BEGIN
 	END
 END
 
+
+go
+
+
+--obtiene el token de un usuario
+
+CREATE PROCEDURE obtenerTokenUsuario(@idReporteVar int)
+as
+begin
+	select nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
+end;
+
+
