@@ -292,16 +292,16 @@ namespace servidor.Models
 
 
         //funcion que devuelve el token segun el id de usuario enviado
-        public string obtenerTokenUsuario(string nombreUsuario)
+        public string obtenerTokenUsuario(int idReporte)
         {
             string token = null;
 
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
 
-            string sql = "exec obtenerTokenUsuario @nombreUsuarioVar";
+            string sql = "exec obtenerTokenUsuario @idReporteVar";
             SqlCommand cmd = new SqlCommand(sql, con);
-            cmd.Parameters.Add("@nombreUsuarioVar", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
+            cmd.Parameters.Add("@idReporteVar", System.Data.SqlDbType.Int).Value = idReporte;
             SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
             if (reader.Read())

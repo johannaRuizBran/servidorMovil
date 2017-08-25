@@ -288,7 +288,7 @@ namespace servidor
             //obtener el token del usuario
             routes.MapRoute(
                 name: "AccesoObtenerTokenUsuario",
-                url: "Usuarios/obtenerTokenUsuario/{nombreUsuario}",
+                url: "Usuarios/obtenerTokenUsuario/{idReporte}",
                 defaults: new
                 {
                     controller = "usuario",

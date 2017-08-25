@@ -90,9 +90,9 @@ namespace servidor.Controllers
 
         //obtener el token del usuario (id del telefono especifico)
         [HttpGet]
-        public JsonResult obtenerTokenUsuarioAction(string nombreUsuario)
+        public JsonResult obtenerTokenUsuarioAction(int idReporte)
         {
-            return Json(usuarioManager.obtenerTokenUsuario(nombreUsuario),
+            return Json(usuarioManager.obtenerTokenUsuario(idReporte),
                         JsonRequestBehavior.AllowGet);
         }
 
