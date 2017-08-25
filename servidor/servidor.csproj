@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ComputadoraController.cs" />
     <Compile Include="Controllers\informacionFaltaController.cs" />
     <Compile Include="Controllers\reporteController.cs" />
     <Compile Include="Controllers\usuarioController.cs" />
@@ -120,6 +122,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="Models\Computadora.cs" />
+    <Compile Include="Models\ComputadoraManager.cs" />
     <Compile Include="Models\informacionFaltante.cs" />
     <Compile Include="Models\informacionFaltanteManager.cs" />
     <Compile Include="Models\Reporte.cs" />
@@ -143,6 +147,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\computadoras\" />
+    <Folder Include="Views\Computadora\" />
     <Folder Include="Views\informacionFalta\" />
     <Folder Include="Views\Reporte\" />
   </ItemGroup>

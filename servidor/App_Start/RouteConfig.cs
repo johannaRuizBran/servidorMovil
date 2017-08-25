@@ -91,6 +91,19 @@ namespace servidor
                     action = "obtenerUsuarioInf",
                 }
             );
+            /////////////////////////////   LABORATORIOS    /////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////
+
+            //obtener PCs de un laboratorio
+            routes.MapRoute(
+                name: "listaPCsDeLaboratorio",
+                url: "informacionFaltante/listaPCs/{nombreLab}",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "obtenerPCs",
+                }
+            );
 
 
             /////////////////////////////   REPORTES    /////////////////////////////////////
