@@ -254,7 +254,7 @@ CREATE PROCEDURE modificarDetalleReporte(
 									@idReporte INT ,
 									@codigoComputadora VARCHAR(100),
 									@estadoComputadora VARCHAR(100),
-									@descripcion VARCHAR(100), 
+									@descripcion VARCHAR(100)
 								)
 as
 BEGIN
@@ -405,7 +405,8 @@ as
 BEGIN
 	select estadoComputadora from detalleReporte as d inner join computadora as c on(d.codigoComputadora = c.codigo)
 	where d.idReporte = @idReporteVar
-	order by c.posicion;
+	order by c.posicionX;
+	
 END;
 
 
@@ -466,7 +467,7 @@ GO
 
 
 
---devuelve los usuarios de un rol en específico o a todos los usuarios
+--devuelve los usuarios de un rol en especï¿½fico o a todos los usuarios
 CREATE PROCEDURE listaDeUsuario (@tipoU varchar(100))
 AS 
 BEGIN		
@@ -497,10 +498,10 @@ GO
 
 
 --insertar
-exec insertarUsuarioAdministrador 'JCP27','123','Juliana','Campos','Parajeles','JCP27@hotmail.com','86806809','Administrador';
-exec insertarUsuarioAdministrador 'Marcos06','Marcos06','Marcos','Elizondo','Torres','yyy@hotmail.com','78128994','Profesor';
-exec insertarUsuarioAdministrador 'FabiR03','FabiR03','Fabiola','Rosales','Fonseca','fff@hotmail.com','54210012','Operador';
-exec insertarUsuarioAdministrador 'Brenes01','Brenes01','Jose','Brenes','Rojas','kkk@hotmail.com','88610001','Tecnico';
+exec insertarUsuario 'JCP27','123','Juliana','Campos','Parajeles','JCP27@hotmail.com','86806809','Administrador','s';
+exec insertarUsuario'Marcos06','Marcos06','Marcos','Elizondo','Torres','yyy@hotmail.com','78128994','Profesor','s';
+exec insertarUsuario 'FabiR03','FabiR03','Fabiola','Rosales','Fonseca','fff@hotmail.com','54210012','Operador','s';
+exec insertarUsuario 'Brenes01','Brenes01','Jose','Brenes','Rojas','kkk@hotmail.com','88610001','Tecnico','s';
 
 
 SELECT * FROM usuario
@@ -572,24 +573,26 @@ SELECT * FROM detalleReporte
 
 
 --insetar computadoras
-INSERT into computadora(codigo,posicion,establecimiento) 
-values	('C-001',1,'LAB-01'),('C-002',2,'LAB-01'),('C-003',3,'LAB-01'),
-		('C-004',4,'LAB-01'),('C-005',5,'LAB-01'),('C-006',6,'LAB-01'),
+INSERT into computadora(codigo,posicionX,posicionY,establecimiento) 
+values	('C-001',72.04834,600.35156,'LAB-01'),('C-002',72.04834,897.53906,'LAB-01'),('C-003',262.22168,1169.6484,'LAB-01'),
+		('C-004',646.5564,897.53906,'LAB-01'),('C-005',646.5564,600.35156,'LAB-01'),
 
-		('C-007',1,'LAB-02'),('C-008',2,'LAB-02'),('C-009',3,'LAB-02'),
-		('C-010',4,'LAB-02'),('C-011',5,'LAB-02'),('C-012',6,'LAB-02'),
+		('C-007',646.5564,897.53906,'LAB-02'),('C-008',646.5564,600.35156,'LAB-02'),('C-009',262.22168,1169.6484,'LAB-02'),
+		('C-010',72.04834,600.35156,'LAB-02'),('C-011',72.04834,897.53906,'LAB-02'),
 
-		('C-013',1,'Miniauditorio'),('C-014',2,'Miniauditorio'),('C-015',3,'Miniauditorio'),
-		('C-016',4,'Miniauditorio'),('C-017',5,'Miniauditorio'),('C-018',6,'Miniauditorio'),		
+		/*('C-013',1,'Miniauditorio'),('C-014',2,'Miniauditorio'),('C-015',3,'Miniauditorio'),
+		('C-016',4,'Miniauditorio'),('C-017',5,'Miniauditorio'),('C-018',6,'Miniauditorio'),	*/
 
-		('C-019',1,'Moviles'),('C-020',2,'Moviles'),('C-021',3,'Moviles'),
-		('C-022',4,'Moviles'),('C-023',5,'Moviles'),('C-024',6,'Moviles'),
+		('C-019',63.050537,181.17188,'Moviles'),('C-020',63.050537,63.050537,'Moviles'),('C-021',63.050537,520.3125,'Moviles'),
+		('C-022',63.050537,672.4219,'Moviles'),('C-023',63.050537,672.4219,'Moviles'),('C-024',597.5134,1035.5859,'Moviles'),
+		('C-030',1035.5859,1035.5859,'Moviles'),('C-031',763.65967,1035.5859,'Moviles'),
 
-		('C-025',1,'SIRZEE'),('C-027',2,'SIRZEE'),('C-029',3,'SIRZEE'),
-		('C-026',4,'SIRZEE'),('C-028',5,'SIRZEE'),('C-030',6,'SIRZEE');
+		('C-025',72.04834,600.35156,'SIRZEE'),('C-027',72.04834,897.53906,'SIRZEE'),('C-029',262.22168,1169.6484,'SIRZEE'),
+		('C-026',646.5564,897.53906,'SIRZEE'),('C-028',646.5564,600.35156,'SIRZEE')
 
-
-
+		
+		SELECT * FROM computadora
+		DELETE computadora where codigo = 'C-001'
 --insertar usuarios NORMALES SIN PERMISO
 select*from usuario
 
@@ -604,7 +607,7 @@ use mantenimiento
 exec insertarUsuario 'Pamela', 'Pamela', 'Pamela', 'Pamea','Vargas', 'Pamela@gmail.com', '85649475','Tecnico','S';
 exec insertarUsuario 'Claudia', 'Claudia', 'Carranza', 'Perez','Brenes', 'Clau@gmail.com', '85649475','Tecnico','S';
 exec insertarUsuario 'Anmador', 'Anmador', 'Palmares', 'Rolcio','Vargas', 'Anmador@gmail.com', '85649475','Tecnico','S';
-exec insertarUsuario 'Sara', 'Sara', 'Pamela', 'Hernández','Vargas', 'Hernandez@gmail.com', '85649475','Tecnico','S';
+exec insertarUsuario 'Sara', 'Sara', 'Pamela', 'Hernï¿½ndez','Vargas', 'Hernandez@gmail.com', '85649475','Tecnico','S';
 exec insertarUsuario 'Roberthod', 'Roberthod', 'Olivares', 'Valles','Valles', 'Valles@gmail.com', '85649475','Tecnico','S';
 
 exec insertarUsuario 'Alvarado', '1234', 'Alvo', 'Mendez','Ortega', 'Ortega@gmail.com', '85352475','Profesor','S';
@@ -679,9 +682,9 @@ EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras d
 use mantenimiento
 
 select * from reporte
-exec solicitudMasInformacionReporte 4, 'Cuál versíón de Ruby'
-exec solicitudMasInformacionReporte 3, 'Indicar cuál versión de Python e indicar como cuándo se realizará exactamente'
-exec solicitudMasInformacionReporte 24, 'Indicar cuál versión para poder instalar'
+exec solicitudMasInformacionReporte 4, 'Cuï¿½l versï¿½ï¿½n de Ruby'
+exec solicitudMasInformacionReporte 3, 'Indicar cuï¿½l versiï¿½n de Python e indicar como cuï¿½ndo se realizarï¿½ exactamente'
+exec solicitudMasInformacionReporte 24, 'Indicar cuï¿½l versiï¿½n para poder instalar'
 select * from reporte where estadoReporte= 'informacion'
 select * from reporte_informacion
 select * from reporte
