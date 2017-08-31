@@ -26,7 +26,8 @@ CREATE TABLE usuario(
 
 CREATE TABLE computadora(
 	codigo VARCHAR(100) PRIMARY KEY,
-	posicion INT not null,
+	posicionX FLOAT not null,
+	posicionY FLOAT not null,
 	establecimiento VARCHAR(100) not null,
 	CONSTRAINT CK_computadora_establecimiento CHECK(establecimiento in ('LAB-01','LAB-02','Miniauditorio','Moviles','SIRZEE')),
 );
@@ -68,10 +69,11 @@ CREATE TABLE detalleReporte(
 	idReporte INT not null,
 	codigoComputadora VARCHAR(100) not null,
 	estadoComputadora VARCHAR(100) not null,
+	descripcion VARCHAR(100),
 	CONSTRAINT PK_detalleReporte_idReporte_codigoComputadora PRIMARY KEY(idReporte,codigoComputadora),
 	CONSTRAINT FK_detalleReporte_idReporte FOREIGN KEY(idReporte)REFERENCES reporte ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT FK_detalleReporte_codigoComputadora FOREIGN KEY(codigoComputadora)REFERENCES computadora ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT CK_detalleReporte_estadoComputadora CHECK (estadoComputadora in ('Rojo','Amarillo','Verde'))
+	CONSTRAINT CK_detalleReporte_estadoComputadora CHECK (estadoComputadora in ('Rojo','Amarillo','Verde','Gris'))
 );
 
 GO
@@ -244,6 +246,24 @@ BEGIN
 		descripcion = @descripcionVar,
 		establecimiento = @establecimientoVar
 	WHERE id = @idVar
+END;
+GO
+
+--modificar reporte
+CREATE PROCEDURE modificarDetalleReporte(
+									@idReporte INT ,
+									@codigoComputadora VARCHAR(100),
+									@estadoComputadora VARCHAR(100),
+									@descripcion VARCHAR(100), 
+								)
+as
+BEGIN
+	UPDATE detalleReporte
+	SET 
+		estadoComputadora = @estadoComputadora ,
+		descripcion = @descripcion 
+		
+	WHERE idReporte = @idReporte and codigoComputadora = @codigoComputadora;
 END;
 GO
 
