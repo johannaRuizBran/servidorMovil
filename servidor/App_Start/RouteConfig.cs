@@ -106,12 +106,12 @@ namespace servidor
             );
 
             routes.MapRoute(
-                name: "actualizarColorDescripcionPC",
-                url: "informacionFaltante/actualizarColorDescripcionPC/{idReporte}/{idPC}/{color}/{descripcion}",
+                name: "actualizarColorPC",
+                url: "informacionFaltante/actualizarColorPC/{idReporte}/{idPC}/{color}",
                 defaults: new
                 {
                     controller = "Computadora",
-                    action = "modificarDetalleReporte",
+                    action = "actualizarColor",
                 }
             );
 
