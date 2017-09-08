@@ -17,16 +17,17 @@ namespace servidor.Controllers
 
 
         [HttpGet]
-        public JsonResult obtenerPCs(string nombreLab)
+        public JsonResult obtenerPCsReporte(int idReporte)
         {
-            return Json(computadora.listaPCs(nombreLab),
+            return Json(computadora.listaPCs(idReporte),
                         JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult actualizarColor(int idReporte, int idPC, string color)
+        public JsonResult modificarDetalleReporte(int idReporte, string idPC, string color, string descripcion)
         {
-            return Json(computadora.actualizarColor(idReporte, idPC, color));
+            return Json(computadora.modificarDetalleReportes(idReporte, idPC, color, descripcion),
+                        JsonRequestBehavior.AllowGet);
         }
     }
 }

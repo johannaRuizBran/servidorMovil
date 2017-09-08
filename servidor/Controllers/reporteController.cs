@@ -21,7 +21,12 @@ namespace servidor.Controllers
             return Json(reporte.obtenerReporteUsuario(nombreU),
                         JsonRequestBehavior.AllowGet);
         }
-        
+        [HttpGet]
+        public JsonResult obtenerReporteTecnicos(string nombreU)
+        {
+            return Json(reporte.obtenerReporteTecnicos(nombreU),
+                        JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult crearReporte(Reporte item)

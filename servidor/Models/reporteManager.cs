@@ -30,6 +30,45 @@ namespace servidor.Models
             return (respuestaQuery == 1);
         }
 
+        public List<Reporte> obtenerReporteTecnicos(string nombreU)
+        {
+            List<Reporte> lista = new List<Reporte>();
+            Reporte registroUSuario = null;
+
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec selectListaDeReportesTecnico @nombreU;";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@nombreU", System.Data.SqlDbType.VarChar).Value = nombreU;
+
+            SqlDataReader reader =
+                cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (reader.Read())
+            {
+                registroUSuario = new Reporte();
+                registroUSuario.id = reader.GetInt32(0);
+                registroUSuario.estadoReporte = reader.GetString(1);
+                if (!reader.IsDBNull(2))
+                {
+                    registroUSuario.prioridadReporte = reader.GetString(2);
+                }
+                else
+                {
+                    registroUSuario.prioridadReporte = "";
+                }
+                registroUSuario.fechaReporte = reader.GetDateTime(3).ToString("yyyy/MM/dd");
+                registroUSuario.fechaFinalizacion = reader.GetDateTime(4).ToString("yyyy/MM/dd");
+                registroUSuario.descripcion = reader.GetString(5);
+                registroUSuario.establecimiento = reader.GetString(6);
+                registroUSuario.nombreUsuario = reader.GetString(7);
+                registroUSuario.nombre = reader.GetString(8);
+                lista.Add(registroUSuario);
+            }
+            reader.Close();
+            return lista;
+        }
 
         public List<Reporte> obtenerReporteUsuario(string nombreU)
         {
@@ -39,7 +78,7 @@ namespace servidor.Models
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
 
-            string sql = "exec selectListaDeReportes @nombreU";
+            string sql = "exec selectListaDeReportesTecnico @nombreU";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@nombreU", System.Data.SqlDbType.VarChar).Value = nombreU;
 
