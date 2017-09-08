@@ -425,7 +425,22 @@ BEGIN
 END;
 
 
+--lista de reportes por hacer de un tecnico
 
+	EXEC selectListaDeReportesTecnico 'Alvarado';
+DROP PROCEDURE selectListaDeReportesTecnico;
+CREATE PROCEDURE selectListaDeReportesTecnico(@nombreU varchar(100))
+AS 
+BEGIN		
+
+	select reporte.id,reporte.estadoReporte, reporte.prioridadReporte, reporte.fechaReporte,
+	reporte.fechaFinalizacion, reporte.descripcion, reporte.establecimiento,  
+	usuario.nombreUsuario, (usuario.nombre + ' ' + usuario.apellido1 + ' ' +  usuario.apellido2) as nombre		
+	
+	 from usuario inner join usuariosReporte on(usuariosReporte.idUsuario = usuario.nombreUsuario)
+	 inner join reporte on (reporte.id= usuariosReporte.idReporte and usuariosReporte.idUsuario= @nombreU AND reporte.estadoReporte !='Finalizado') 
+
+END;
 
 --lista de reportes de un usuario
 CREATE PROCEDURE selectListaDeReportes(@personaVar varchar(100))
@@ -503,7 +518,7 @@ exec insertarUsuario'Marcos06','Marcos06','Marcos','Elizondo','Torres','yyy@hotm
 exec insertarUsuario 'FabiR03','FabiR03','Fabiola','Rosales','Fonseca','fff@hotmail.com','54210012','Operador','s';
 exec insertarUsuario 'Brenes01','Brenes01','Jose','Brenes','Rojas','kkk@hotmail.com','88610001','Tecnico','s';
 
-
+exec insertarDetalleReporte '1';
 SELECT * FROM usuario
 
 
@@ -727,9 +742,38 @@ BEGIN
 END;
 
 
+-------------------------------Nuevos Gabiel------------------------------
+drop PROCEDURE obtenerPCsLaboratorio
+CREATE PROCEDURE obtenerPCsLaboratorio(
+								@idReporte VARCHAR(100)
+								)
+AS 
+BEGIN		
+			 --SELECT * FROM computadora WHERE establecimiento=@nombreLab;	
+			 select * from detalleReporte as inf inner join computadora as comp on (comp.codigo= inf.codigoComputadora) where inf.idReporte = @idReporte;
+	return
+END;
 
 
 
+EXEC obtenerPCsLaboratorio '1';
+
+EXEC actualizarDetalleReporte '1','C-007','Verde','listo';
+
+DROP PROCEDURE actualizarDetalleReporte;
+CREATE PROCEDURE actualizarDetalleReporte(
+								@idReporte int,
+								@idPC  VARCHAR(100),
+								@color VARCHAR(100),
+								@descripcion VARCHAR(100)
+								)
+AS 
+BEGIN	
+	UPDATE detalleReporte
+		SET estadoComputadora = @color,
+			descripcion = @descripcion
+		WHERE idReporte = @idReporte AND codigoComputadora = @idPC;
+END
 ------------------------------------------------------------- nuevo..... funciones para push
 
 

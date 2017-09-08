@@ -221,10 +221,7 @@ namespace servidor.Models
         //enviar el mensaje
         public bool enviarMensajePush(string appID, string senderID, string deviceID, string mensaje)
         {
-            appID = "AAAAU-NQ3Ak:APA91bE09KiPNvglm_JW6J25YXBF1crW94fEAjQPcXxEONIsskszOAtUUvBXmOInMf_XwXX3tqabswj6bHIEqJ4iX0BrfrMCDnbVEZjvda6q0hylyfNCxDh0FtIBdX6smRaWu9P9hXwH";
-            senderID = "360296012809";
-            deviceID = "cb8YaDz6RIM:APA91bFfccigQQaNbHgsG_LmFz8UqoAzYSGEtadG6AfA98UFeugKD6jc_-LCOjY1QWP4yD9NsoP9Q1YQOEbevymQiozCN6hcvDrlSCv707pzHIM4hSQViuUzuS6euQ9w41Qr9Oicac2k";
-            try
+                try
             {
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
