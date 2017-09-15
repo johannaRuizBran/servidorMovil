@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -154,7 +154,7 @@ namespace servidor
                 }
             );
 
-            //obtener información de un reporte
+            //obtener informaciï¿½n de un reporte
             routes.MapRoute(
                 name: "informacionReporte",
                 url: "Reportes/informacionReporte/{idReporte}",
@@ -177,7 +177,7 @@ namespace servidor
             );
 
 
-            //información incompleta
+            //informaciï¿½n incompleta
             routes.MapRoute(
                 name: "informacionFaltante",
                 url: "Reportes/informacionFaltante/{idReporte}",
@@ -287,7 +287,7 @@ namespace servidor
             //envia un mensaje al usuairo segun la direccion del id app,id usuario
             routes.MapRoute(
                 name: "AccesoEnviarMensajePush",
-                url: "Usuarios/enviarMensajePush/{appID}/{senderID}/{deviceID}/{mensaje}",
+                url: "Usuarios/enviarMensajePush",
                 defaults: new
                 {
                     controller = "usuario",

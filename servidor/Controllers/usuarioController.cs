@@ -76,9 +76,9 @@ namespace servidor.Controllers
 
         //enviar mensaje
         [HttpPost]
-        public JsonResult enviarMensajePushAction(string appID, string senderID, string deviceID, string mensaje)
+        public JsonResult enviarMensajePushAction(ConexionPush item)
         {
-            return Json(usuarioManager.enviarMensajePush(appID, senderID, deviceID, mensaje));
+            return Json(usuarioManager.enviarMensajePush(item));
         }
 
         //actualizar token

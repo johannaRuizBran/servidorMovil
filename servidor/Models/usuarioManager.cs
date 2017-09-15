@@ -211,18 +211,20 @@ namespace servidor.Models
             reader.Close();
             return usuarioLog;
         }
-
-
-
-
         /// nuevas funciones del push
 
 
         //enviar el mensaje
-        public bool enviarMensajePush(string appID, string senderID, string deviceID, string mensaje)
+        public string enviarMensajePush(ConexionPush item)
         {
-                try
+            string appID = item.appID;
+            string senderID = item.senderID;
+            string deviceID = item.deviceID;
+            string mensaje = item.mensaje;
+            string str;
+            try
             {
+
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";
@@ -234,6 +236,7 @@ namespace servidor.Models
                         body = mensaje,
                         title = "AlBaami",
                         sound = "Enabled"
+
                     }
                 };
                 var serializer = new JavaScriptSerializer();
@@ -252,23 +255,20 @@ namespace servidor.Models
                             using (StreamReader tReader = new StreamReader(dataStreamResponse))
                             {
                                 String sResponseFromServer = tReader.ReadToEnd();
-                                string str = sResponseFromServer;
+                                str = sResponseFromServer;
                             }
                         }
                     }
                 }
-                return true;
+                return "si lo hizo";
             }
             catch (Exception ex)
             {
-                string str = ex.Message;
+                str = ex.Message;
             }
-            return false;
+
+            return "no" + "error: " + str;
         }
-
-
-        //funciones nuevas para push
-
 
         //actulizar token id para push notification
         public bool actualizarTokenPushNotf(string nombreUsuario, string id)
@@ -281,7 +281,7 @@ namespace servidor.Models
 
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@nombreUsuario", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
-            cmd.Parameters.Add("@id", System.Data.SqlDbType.VarChar).Value = id;          
+            cmd.Parameters.Add("@id", System.Data.SqlDbType.VarChar).Value = id;
             int respuestaQuery = cmd.ExecuteNonQuery();
             con.Close();
             return (respuestaQuery == 1);
@@ -308,5 +308,8 @@ namespace servidor.Models
             reader.Close();
             return token;
         }
+
+
+
     }
 }
