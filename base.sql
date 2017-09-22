@@ -442,6 +442,9 @@ BEGIN
 
 END;
 
+
+
+
 --lista de reportes de un usuario
 CREATE PROCEDURE selectListaDeReportes(@personaVar varchar(100))
 AS 
@@ -452,7 +455,7 @@ BEGIN
 	usuario.nombreUsuario, (usuario.nombre + ' ' + usuario.apellido1 + ' ' +  usuario.apellido2) as nombre		
 	
 	 from usuario inner join usuariosReporte on(usuariosReporte.idUsuario = usuario.nombreUsuario)
-	 inner join reporte on (reporte.id= usuariosReporte.idReporte and usuariosReporte.idUsuario=  'Alvarado') 
+	 inner join reporte on (reporte.id= usuariosReporte.idReporte and usuariosReporte.idUsuario=  @personaVar) 
 END;
 
 
@@ -812,4 +815,14 @@ begin
 	select nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
 end;
 
+select * from usuariosReporte where idUsuario= 'Alvarado'
 
+
+update reporte set estadoReporte= 'informacion' where id= 3 or id= 4 or id= 5 or id= 6 or id= 7
+exec obtenerTokenAdministradores
+CREATE PROCEDURE obtenerTokenAdministradores
+AS 
+BEGIN	
+	SELECT usuario_token.token FROM usuario_token inner join usuario on (usuario.nombreUsuario= usuario_token.nombreUsuario and
+	usuario.rol= 'Administrador')
+END

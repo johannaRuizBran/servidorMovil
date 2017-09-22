@@ -309,7 +309,25 @@ namespace servidor.Models
             return token;
         }
 
+        public List<String> obtenerListaTokenAdministradores()
+        {
+            List<String> lista = new List<String>();
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
 
+            string sql = "exec obtenerTokenAdministradores";
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            SqlDataReader reader =
+                cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (reader.Read())
+            {
+                lista.Add(reader.GetString(0));
+            }
+            reader.Close();
+            return lista;
+        }
 
     }
 }

@@ -307,6 +307,17 @@ namespace servidor
                 }
             );
 
+            //obtener lista token de usuarios administradores
+            routes.MapRoute(
+                name: "AccesoUsuariosListaAdministradores",
+                url: "Usuarios/obtenerListaTokenAdministradores",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "obtenerListaTokenAdministradores"
+                }
+            );
+
 
         }
     }

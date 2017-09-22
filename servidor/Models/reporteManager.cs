@@ -78,7 +78,7 @@ namespace servidor.Models
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
 
-            string sql = "exec selectListaDeReportesTecnico @nombreU";
+            string sql = "exec selectListaDeReportes @nombreU";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@nombreU", System.Data.SqlDbType.VarChar).Value = nombreU;
 

@@ -96,6 +96,12 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult obtenerListaTokenAdministradores()
+        {
+            return Json(usuarioManager.obtenerListaTokenAdministradores(),
+                        JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
