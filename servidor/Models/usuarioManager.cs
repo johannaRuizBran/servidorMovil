@@ -238,6 +238,7 @@ namespace servidor.Models
                         sound = "Enabled"
 
                     }
+                    //click_action = "com.apurv.fcmtest.OPEN_ACTIVITY_1"
                 };
                 var serializer = new JavaScriptSerializer();
                 var json = serializer.Serialize(data);

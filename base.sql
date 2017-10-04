@@ -699,7 +699,9 @@ EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras d
 
 use mantenimiento
 
-select * from reporte
+
+
+
 exec solicitudMasInformacionReporte 4, 'Cu�l vers��n de Ruby'
 exec solicitudMasInformacionReporte 3, 'Indicar cu�l versi�n de Python e indicar como cu�ndo se realizar� exactamente'
 exec solicitudMasInformacionReporte 24, 'Indicar cu�l versi�n para poder instalar'
@@ -708,6 +710,8 @@ select * from reporte_informacion
 select * from reporte
 
 
+use mantenimiento
+select * 
 update reporte set estadoReporte= 'informacion' where id=4
 
 
@@ -757,8 +761,7 @@ BEGIN
 	return
 END;
 
-
-
+update reporte set estadoReporte= 'informacion'
 EXEC obtenerPCsLaboratorio '1';
 
 EXEC actualizarDetalleReporte '1','C-007','Verde','listo';
