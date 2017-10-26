@@ -829,3 +829,51 @@ BEGIN
 	SELECT usuario_token.token FROM usuario_token inner join usuario on (usuario.nombreUsuario= usuario_token.nombreUsuario and
 	usuario.rol= 'Administrador')
 END
+
+
+
+go
+
+
+use mantenimiento
+
+select * from usuario
+use mantenimiento
+
+
+
+
+GO
+CREATE PROCEDURE obtenerTecnicosAsignadosAReporte(
+	@idReporteP int
+)
+AS 
+BEGIN	
+	SELECT u.nombreUsuario,u.contrasena,u.nombre,u.apellido1,u.apellido2,u.correo,u.correo,u.telefono,u.rol, u.activo 
+		FROM usuario AS u inner join usuariosReporte AS ur ON (u.nombreUsuario = ur.idUsuario) 
+		WHERE ur.idReporte = @idReporteP and ur.rol = 'Tecnico'
+END
+
+
+
+GO
+
+
+CREATE PROCEDURE eliminarTecnicosReporte(
+	@idReporteP int
+)
+AS 
+BEGIN	
+	delete usuariosReporte where idReporte=@idReporteP and rol = 'Tecnico';
+END
+
+
+
+
+drop procedure obtenerTecnicosAsignadosAReporte
+select * from usuariosReporte
+
+
+exec obtenerTecnicosAsignadosAReporte 1012
+
+
