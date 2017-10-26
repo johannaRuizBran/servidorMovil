@@ -93,6 +93,66 @@ namespace servidor.Models
         }
 
 
+        // OBTIENE LA LISTA DE TECNICOS QUE ESTAS ASOCIADOS A UN REPORTE
+
+        public List<Usuario> obtenerListaTecnicosReporte(int idReporte)
+        {
+            List<Usuario> lista = new List<Usuario>();
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec obtenerTecnicosAsignadosAReporte @idReporte";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+
+            SqlDataReader reader =
+                cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (reader.Read())
+            {
+                Usuario registroUSuario = new Usuario();
+
+                registroUSuario = new Usuario();
+                registroUSuario.nombreUsuario = reader.GetString(0);
+                registroUSuario.contrasena = reader.GetString(1);
+                registroUSuario.nombre = reader.GetString(2);
+                registroUSuario.apellido1 = reader.GetString(3);
+                registroUSuario.apellido2 = reader.GetString(4);
+                registroUSuario.correo = reader.GetString(5);
+                registroUSuario.telefono = reader.GetString(6);
+                registroUSuario.rol = reader.GetString(7);
+                registroUSuario.activo = reader.GetString(8);
+                lista.Add(registroUSuario);
+            }
+            reader.Close();
+            return lista;
+        }
+
+
+
+        //ELIMINAR TODOS LOS TECNICOS ASOCIADOS A UN REPORTE
+        public bool eliminarTecnicosReporte(int idReporte)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec eliminarTecnicosReporte @idUsuarioV";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idUsuarioV", System.Data.SqlDbType.Int).Value = idReporte;
+
+
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 1);
+        }
+
+
+
+
+
+
+
         //elimina un usuario
         public bool eliminarUsuario(string nombreUsuario)
         {

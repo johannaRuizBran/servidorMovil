@@ -103,5 +103,21 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+
+        //obtener lista de tecnicos que estab asignados a un reporte
+        [HttpGet]
+        public JsonResult obtenerListaTecnicosReporteAction(int idReporte)
+        {
+            return Json(usuarioManager.obtenerListaTecnicosReporte(idReporte),
+                        JsonRequestBehavior.AllowGet);
+        }
+        //eliminar todos los tecnicos que estan asociados a un reporte
+        [HttpPost]
+        public JsonResult eliminarTecnicosReporteAction(int idReporte)
+        {
+            return Json(usuarioManager.eliminarTecnicosReporte(idReporte));
+        }
+        
+
     }
 }
