@@ -221,6 +221,7 @@ namespace servidor.Models
             string senderID = item.senderID;
             string deviceID = item.deviceID;
             string mensaje = item.mensaje;
+            int reporte = item.idReporte;
             string str;
             try
             {
@@ -228,20 +229,23 @@ namespace servidor.Models
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";
-                var data = new
+                var datos = new
                 {
                     to = deviceID,
+                    data= new {
+                        mensaje= reporte
+                    },
                     notification = new
                     {
                         body = mensaje,
                         title = "AlBaami",
-                        sound = "Enabled"
+                        sound = "Eabled"
 
                     }
                     //click_action = "com.apurv.fcmtest.OPEN_ACTIVITY_1"
                 };
                 var serializer = new JavaScriptSerializer();
-                var json = serializer.Serialize(data);
+                var json = serializer.Serialize(datos);
                 Byte[] byteArray = Encoding.UTF8.GetBytes(json);
                 tRequest.Headers.Add(string.Format("Authorization: key={0}", appID));
                 tRequest.Headers.Add(string.Format("Sender: id={0}", senderID));

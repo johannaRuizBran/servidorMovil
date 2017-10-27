@@ -720,7 +720,7 @@ drop procedure actualizarInformacionReporte
 exec actualizarInformacionReporte 3, 'es la nuemro 2'
 
 
-select * from reporte where id = 8
+select * from reporte where id = 7
 CREATE PROCEDURE actualizarInformacionReporte(@idReporte int, @descripcion varchar(500))
 AS 
 DECLARE

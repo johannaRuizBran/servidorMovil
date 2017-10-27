@@ -11,5 +11,6 @@ namespace servidor.Models
         public string senderID { get; set; }
         public string deviceID { get; set; }
         public string mensaje { get; set; }
+        public int idReporte { get; set; }
     }
 }
