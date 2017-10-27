@@ -212,6 +212,30 @@ namespace servidor
                 }
             );
 
+
+            //obtener todos los tecnicos que estan asignados a un reporte
+            routes.MapRoute(
+                name: "AccesoUsuariosListaTecnicosReporte",
+                url: "Usuarios/obtenerListaTecnicosReporte/{idReporte}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "obtenerListaTecnicosReporteAction"
+                }
+            );
+
+            routes.MapRoute(
+                name: "AccesoUsuariosElimminarTecnicosReporte",
+                url: "Usuarios/eliminarTecnicosReporte/{idReporte}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "eliminarTecnicosReporteAction"
+                }
+            );
+
+
+
             ///////////////////////////   INFORMACION FALTANTE
 
 

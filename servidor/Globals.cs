@@ -7,7 +7,11 @@ namespace servidor
 {
     public class Globals
     {        
+<<<<<<< HEAD
         private static string ip = @"Data Source= 172.24.47.228;Initial Catalog=mantenimiento;User Id=sa;Password=123";
+=======
+        private static string ip = @"Data Source= 172.24.43.202;Initial Catalog=mantenimiento;User Id=sa;Password=123";
+>>>>>>> origin/master
 
         public static string IP
         {
