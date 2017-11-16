@@ -298,7 +298,7 @@ namespace servidor.Models
                     notification = new
                     {
                         body = mensaje,
-                        title = "AlBaami",
+                        title = "Nuevo Mensaje",
                         sound = "Eabled"
 
                     }
