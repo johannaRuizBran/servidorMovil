@@ -336,8 +336,11 @@ namespace servidor.Models
         }
 
         //actulizar token id para push notification
-        public bool actualizarTokenPushNotf(string nombreUsuario, string id)
+        public bool actualizarTokenPushNotf(Token item)
         {
+            string nombreUsuario = item.nombreUsuario;
+            string id = item.token;
+
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
             string sql = "exec actualizarTokenUsuario "

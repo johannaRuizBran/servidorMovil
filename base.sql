@@ -172,6 +172,7 @@ END;
 
 GO
 
+
 go
 
 CREATE PROCEDURE activarUsuario(
@@ -215,7 +216,7 @@ BEGIN
 		VALUES(@ultimoRegistro,@idUsuarioVar,'Usuario');
 END;
 
-
+select * from usuariosReporte
 GO
 
 CREATE PROCEDURE eliminarReporte(@idReporteVar INT)
@@ -397,6 +398,9 @@ END;
 GO
 
 
+select * from reporte inner join usuario where nombreUsuario= 
+
+select * from usuario_token
 --lista el estados de las computadoras segun el reporte
 CREATE PROCEDURE selectEstadosComputadoras(
 									@idReporteVar INT
@@ -442,10 +446,12 @@ BEGIN
 
 END;
 
-
-
-
+delete from usuario_token
+select * from usuario_token
+exec selectListaDeReportes 'Anthony'
 --lista de reportes de un usuario
+
+
 CREATE PROCEDURE selectListaDeReportes(@personaVar varchar(100))
 AS 
 BEGIN		

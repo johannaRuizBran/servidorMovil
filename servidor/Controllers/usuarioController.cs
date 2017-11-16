@@ -83,9 +83,9 @@ namespace servidor.Controllers
 
         //actualizar token
         [HttpPost]
-        public JsonResult actualizarTokenPushNotf(string nombreUsuario, string id)
+        public JsonResult actualizarTokenPushNotf(Token item)
         {
-            return Json(usuarioManager.actualizarTokenPushNotf(nombreUsuario, id));
+            return Json(usuarioManager.actualizarTokenPushNotf(item));
         }
 
         //obtener el token del usuario (id del telefono especifico)

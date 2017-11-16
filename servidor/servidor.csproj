@@ -129,6 +129,7 @@
     <Compile Include="Models\informacionFaltanteManager.cs" />
     <Compile Include="Models\Reporte.cs" />
     <Compile Include="Models\reporteManager.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\usuarioManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

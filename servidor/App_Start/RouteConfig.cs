@@ -298,7 +298,7 @@ namespace servidor
 
             routes.MapRoute(
                 name: "ActualizartokenIdPush",
-                url: "Usuarios/actualizarTokenPush/{nombreUsuario}/{id}",
+                url: "Usuarios/actualizarTokenPush",
                 defaults: new
                 {
                     controller = "usuario",
