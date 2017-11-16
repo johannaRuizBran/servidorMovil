@@ -5,7 +5,7 @@
 --use master;
 --use mantenimiento;
 
-
+select * from reporte
 CREATE TABLE usuario(
 	nombreUsuario	VARCHAR(100) PRIMARY KEY,
 	contrasena	VARCHAR(100) not null,
