@@ -847,11 +847,11 @@ exec insertarUsuario 'Maria', '321', 'Maria', 'Rojas','Brenes', 'Maria@gmail.com
 
 
 
-
+use mantenimiento
 --insertar ---
 
-select * from usuario
-EXEC crearReporte 'conPrioridad','05-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
+select * from reporte
+EXEC crearReporte 'nuevo','05-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
 EXEC crearReporte 'conPrioridad','05-10-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
 EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';
 EXEC crearReporte 'conPrioridad','02-11-2017','Instalar python en computadoras del lab-02','LAB-02','Alvarado';						
