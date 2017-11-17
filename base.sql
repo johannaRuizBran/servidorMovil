@@ -1,4 +1,4 @@
---CREATE DATABASE mantenimiento;
+﻿--CREATE DATABASE mantenimiento;
 --ELIMINAR
 --USE Quiz
 --DROP DATABASE mantenimiento
@@ -29,7 +29,7 @@ CREATE TABLE computadora(
 	posicionX FLOAT not null,
 	posicionY FLOAT not null,
 	establecimiento VARCHAR(100) not null,
-	CONSTRAINT CK_computadora_establecimiento CHECK(establecimiento in ('LAB-01','LAB-02','Miniauditorio','Moviles','SIRZEE')),
+	--CONSTRAINT CK_computadora_establecimiento CHECK(establecimiento in ('LAB-01','LAB-02','Miniauditorio','Moviles','SIRZEE')),
 );
 
 CREATE TABLE reporte(
