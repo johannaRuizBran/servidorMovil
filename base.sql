@@ -786,6 +786,39 @@ BEGIN
 			descripcion = @descripcion
 		WHERE idReporte = @idReporte AND codigoComputadora = @idPC;
 END
+
+
+DROP PROCEDURE crearPc
+CREATE PROCEDURE crearPc(
+								@idPC VARCHAR(100),
+								@x  VARCHAR(100),
+								@y VARCHAR(100),
+								@nombreLab VARCHAR(100)
+								)
+AS 
+BEGIN TRY
+  INSERT into computadora(codigo,posicionX,posicionY,establecimiento) 
+	values	(@idPC,@x ,@y,@nombreLab);
+END TRY
+BEGIN CATCH
+  IF ERROR_NUMBER() = 2627
+    UPDATE computadora
+		SET posicionX = @x,
+			posicionY = @y,
+			establecimiento = @nombreLab
+		WHERE codigo = @idPC;
+END CATCH
+
+--EXEC crearPc 'IC-1050','100.1','122.2','asd';
+
+CREATE PROCEDURE obtenerLabs
+AS 
+BEGIN		
+	select establecimiento from computadora GROUP BY establecimiento;
+	return
+END;
+
+--EXEC obtenerLabs
 ------------------------------------------------------------- nuevo..... funciones para push
 
 
