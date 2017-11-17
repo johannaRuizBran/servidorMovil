@@ -5,7 +5,7 @@
 --use master;
 --use mantenimiento;
 
-select * from reporte
+
 CREATE TABLE usuario(
 	nombreUsuario	VARCHAR(100) PRIMARY KEY,
 	contrasena	VARCHAR(100) not null,
@@ -173,8 +173,6 @@ END;
 GO
 
 
-go
-
 CREATE PROCEDURE activarUsuario(
 									@nombreUsuarioVar VARCHAR(100)
 								)
@@ -216,7 +214,7 @@ BEGIN
 		VALUES(@ultimoRegistro,@idUsuarioVar,'Usuario');
 END;
 
-select * from usuariosReporte
+
 GO
 
 CREATE PROCEDURE eliminarReporte(@idReporteVar INT)
@@ -398,9 +396,6 @@ END;
 GO
 
 
-select * from reporte inner join usuario where nombreUsuario= 
-
-select * from usuario_token
 --lista el estados de las computadoras segun el reporte
 CREATE PROCEDURE selectEstadosComputadoras(
 									@idReporteVar INT
@@ -431,8 +426,9 @@ END;
 
 --lista de reportes por hacer de un tecnico
 
-	EXEC selectListaDeReportesTecnico 'Alvarado';
-DROP PROCEDURE selectListaDeReportesTecnico;
+go
+
+
 CREATE PROCEDURE selectListaDeReportesTecnico(@nombreU varchar(100))
 AS 
 BEGIN		
@@ -446,9 +442,7 @@ BEGIN
 
 END;
 
-delete from usuario_token
-select * from usuario_token
-exec selectListaDeReportes 'Anthony'
+go
 --lista de reportes de un usuario
 
 
@@ -464,7 +458,7 @@ BEGIN
 	 inner join reporte on (reporte.id= usuariosReporte.idReporte and usuariosReporte.idUsuario=  @personaVar) 
 END;
 
-
+go
 
 CREATE PROCEDURE selectReporte(@idVar varchar(100))
 AS 
@@ -480,6 +474,8 @@ END;
 
 --tecnicos de un reporte
 GO
+
+
 CREATE PROCEDURE selectTecnicosReporte
 AS 
 BEGIN
@@ -506,10 +502,216 @@ BEGIN
 	return
 END;
 
-drop procedure listaDeUsuario
-exec listaDeUsuario 'Profesor'
 
 GO
+
+
+-------- nuevo ------------------
+
+
+CREATE PROCEDURE selectReportesPrioritariosFiltro(@tipoPrioridad varchar(100))
+AS 
+BEGIN
+
+	if @tipoPrioridad = 'fecha'
+		BEGIN
+			select r.id,r.estadoReporte,r.prioridadReporte,r.fechaReporte,r.fechaFinalizacion,r.descripcion,
+			 r.establecimiento,u.nombreUsuario,(u.nombre + ' ' + u.apellido1 + ' ' +  u.apellido2) as nombre from reporte as r 
+			 inner join usuariosReporte as ur on(r.id = ur.idReporte) 
+			 inner join usuario as u on(ur.idUsuario = u.nombreUsuario) 
+			 where r.estadoReporte = 'conPrioridad' and ur.rol = 'Usuario' order by r.fechaFinalizacion
+		END
+	ELSE
+		BEGIN
+			 select r.id,r.estadoReporte,r.prioridadReporte,r.fechaReporte,r.fechaFinalizacion,r.descripcion,
+			 r.establecimiento,u.nombreUsuario,(u.nombre + ' ' + u.apellido1 + ' ' +  u.apellido2) as nombre from reporte as r 
+			 inner join usuariosReporte as ur on(r.id = ur.idReporte) 
+			 inner join usuario as u on(ur.idUsuario = u.nombreUsuario) 
+			 where r.estadoReporte = 'conPrioridad' and ur.rol = 'Usuario' 
+			 order by 
+					CASE r.prioridadReporte
+					  WHEN 'Alto' THEN 1
+					  WHEN 'Medio' THEN 2
+					  WHEN 'Bajo' THEN 3
+				   END;
+		END;		
+END;
+
+
+go
+
+
+CREATE PROCEDURE actualizarInformacionReporte(@idReporte int, @descripcion varchar(500))
+AS 
+DECLARE
+	@descripcionAntigua varchar(500)
+BEGIN	
+	set @descripcionAntigua= (select descripcion from reporte where id= @idReporte);
+	DELETE FROM reporte_informacion WHERE idReporte= @idReporte;
+	update reporte set descripcion= @descripcionAntigua + ' '+ @descripcion where id= @idReporte;
+	update reporte set estadoReporte= 'nuevo' where id= @idReporte;
+END;
+
+go
+
+CREATE PROCEDURE solicitudMasInformacionReporte( 
+									@idReporteVar int,									
+									@informacionVar VARCHAR(500)
+								)
+as
+DECLARE
+	@ultimoRegistro INT
+BEGIN
+	INSERT INTO reporte_informacion(idReporte,observacion)
+		VALUES(@idReporteVar,@informacionVar);
+END;
+
+
+go
+-------------------------------Nuevos Gabiel------------------------------
+
+CREATE PROCEDURE obtenerPCsLaboratorio(
+								@idReporte VARCHAR(100)
+								)
+AS 
+BEGIN		
+			 --SELECT * FROM computadora WHERE establecimiento=@nombreLab;	
+			 select * from detalleReporte as inf inner join computadora as comp on (comp.codigo= inf.codigoComputadora) where inf.idReporte = @idReporte;
+	return
+END;
+
+go
+
+
+CREATE PROCEDURE actualizarDetalleReporte(
+								@idReporte int,
+								@idPC  VARCHAR(100),
+								@color VARCHAR(100),
+								@descripcion VARCHAR(100)
+								)
+AS 
+BEGIN	
+	UPDATE detalleReporte
+		SET estadoComputadora = @color,
+			descripcion = @descripcion
+		WHERE idReporte = @idReporte AND codigoComputadora = @idPC;
+END
+
+
+go
+
+
+CREATE PROCEDURE crearPc(
+								@idPC VARCHAR(100),
+								@x  VARCHAR(100),
+								@y VARCHAR(100),
+								@nombreLab VARCHAR(100)
+								)
+AS 
+BEGIN TRY
+  INSERT into computadora(codigo,posicionX,posicionY,establecimiento) 
+	values	(@idPC,@x ,@y,@nombreLab);
+END TRY
+BEGIN CATCH
+  IF ERROR_NUMBER() = 2627
+    UPDATE computadora
+		SET posicionX = @x,
+			posicionY = @y,
+			establecimiento = @nombreLab
+		WHERE codigo = @idPC;
+END CATCH
+
+
+go
+--EXEC crearPc 'IC-1050','100.1','122.2','asd';
+
+CREATE PROCEDURE obtenerLabs
+AS 
+BEGIN		
+	select establecimiento from computadora GROUP BY establecimiento;
+	return
+END;
+
+--EXEC obtenerLabs
+------------------------------------------------------------- nuevo..... funciones para push
+go
+
+
+CREATE TABLE usuario_token(
+	nombreUsuario VARCHAR(100) NOT NULL PRIMARY KEY,
+	token VARCHAR(600) NOT NULL,
+	CONSTRAINT FK_usuarioToken_nombreUsuario FOREIGN KEY(nombreUsuario) REFERENCES usuario ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+go
+
+CREATE PROCEDURE actualizarTokenUsuario(@nombreUsuarioVar varchar(100), @tokenVar varchar(600))
+AS 
+BEGIN	
+	IF (NOT EXISTS(SELECT * FROM usuario_token where nombreUsuario=@nombreUsuarioVar))
+		BEGIN
+			INSERT INTO usuario_token VALUES(@nombreUsuarioVar,@tokenVar);
+		END 
+	ELSE
+	BEGIN
+		UPDATE usuario_token
+						SET token = @tokenVar 
+						WHERE nombreUsuario = @nombreUsuarioVar;
+	END
+END
+
+
+go
+
+
+--obtiene el token de un usuario
+
+CREATE PROCEDURE obtenerTokenUsuario(@idReporteVar int)
+as
+begin
+	select nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
+end;
+
+
+go
+
+
+CREATE PROCEDURE obtenerTokenAdministradores
+AS 
+BEGIN	
+	SELECT usuario_token.token FROM usuario_token inner join usuario on (usuario.nombreUsuario= usuario_token.nombreUsuario and
+	usuario.rol= 'Administrador')
+END
+
+
+
+go
+
+
+CREATE PROCEDURE obtenerTecnicosAsignadosAReporte(
+	@idReporteP int
+)
+AS 
+BEGIN	
+	SELECT u.nombreUsuario,u.contrasena,u.nombre,u.apellido1,u.apellido2,u.correo,u.correo,u.telefono,u.rol, u.activo 
+		FROM usuario AS u inner join usuariosReporte AS ur ON (u.nombreUsuario = ur.idUsuario) 
+		WHERE ur.idReporte = @idReporteP and ur.rol = 'Tecnico'
+END
+
+
+
+GO
+
+
+CREATE PROCEDURE eliminarTecnicosReporte(
+	@idReporteP int
+)
+AS 
+BEGIN	
+	delete usuariosReporte where idReporte=@idReporteP and rol = 'Tecnico';
+END;
+
+
 
 
 
@@ -645,48 +847,6 @@ exec insertarUsuario 'Maria', '321', 'Maria', 'Rojas','Brenes', 'Maria@gmail.com
 
 
 
--------- nuevo ------------------
-
-
-CREATE PROCEDURE selectReportesPrioritariosFiltro(@tipoPrioridad varchar(100))
-AS 
-BEGIN
-
-	if @tipoPrioridad = 'fecha'
-		BEGIN
-			select r.id,r.estadoReporte,r.prioridadReporte,r.fechaReporte,r.fechaFinalizacion,r.descripcion,
-			 r.establecimiento,u.nombreUsuario,(u.nombre + ' ' + u.apellido1 + ' ' +  u.apellido2) as nombre from reporte as r 
-			 inner join usuariosReporte as ur on(r.id = ur.idReporte) 
-			 inner join usuario as u on(ur.idUsuario = u.nombreUsuario) 
-			 where r.estadoReporte = 'conPrioridad' and ur.rol = 'Usuario' order by r.fechaFinalizacion
-		END
-	ELSE
-		BEGIN
-			 select r.id,r.estadoReporte,r.prioridadReporte,r.fechaReporte,r.fechaFinalizacion,r.descripcion,
-			 r.establecimiento,u.nombreUsuario,(u.nombre + ' ' + u.apellido1 + ' ' +  u.apellido2) as nombre from reporte as r 
-			 inner join usuariosReporte as ur on(r.id = ur.idReporte) 
-			 inner join usuario as u on(ur.idUsuario = u.nombreUsuario) 
-			 where r.estadoReporte = 'conPrioridad' and ur.rol = 'Usuario' 
-			 order by 
-					CASE r.prioridadReporte
-					  WHEN 'Alto' THEN 1
-					  WHEN 'Medio' THEN 2
-					  WHEN 'Bajo' THEN 3
-				   END;
-		END;		
-END;
-
-
-
-
-
-
-@estadoReporteVar VARCHAR(100),									
-									@fechaFinalizacionVar DATE, 
-									@descripcionVar VARCHAR(500),
-									@establecimientoVar VARCHAR(100),
-									@idUsuarioVar	VARCHAR(100)
-
 
 --insertar ---
 
@@ -727,45 +887,7 @@ exec actualizarInformacionReporte 3, 'es la nuemro 2'
 
 
 select * from reporte where id = 7
-CREATE PROCEDURE actualizarInformacionReporte(@idReporte int, @descripcion varchar(500))
-AS 
-DECLARE
-	@descripcionAntigua varchar(500)
-BEGIN	
-	set @descripcionAntigua= (select descripcion from reporte where id= @idReporte);
-	DELETE FROM reporte_informacion WHERE idReporte= @idReporte;
-	update reporte set descripcion= @descripcionAntigua + ' '+ @descripcion where id= @idReporte;
-	update reporte set estadoReporte= 'nuevo' where id= @idReporte;
-END;
 
-exec modificarFechaYPrioridadReporte 8,'Alto'
-
-
-
-CREATE PROCEDURE solicitudMasInformacionReporte( 
-									@idReporteVar int,									
-									@informacionVar VARCHAR(500)
-								)
-as
-DECLARE
-	@ultimoRegistro INT
-BEGIN
-	INSERT INTO reporte_informacion(idReporte,observacion)
-		VALUES(@idReporteVar,@informacionVar);
-END;
-
-
--------------------------------Nuevos Gabiel------------------------------
-drop PROCEDURE obtenerPCsLaboratorio
-CREATE PROCEDURE obtenerPCsLaboratorio(
-								@idReporte VARCHAR(100)
-								)
-AS 
-BEGIN		
-			 --SELECT * FROM computadora WHERE establecimiento=@nombreLab;	
-			 select * from detalleReporte as inf inner join computadora as comp on (comp.codigo= inf.codigoComputadora) where inf.idReporte = @idReporte;
-	return
-END;
 
 update reporte set estadoReporte= 'informacion'
 EXEC obtenerPCsLaboratorio '1';
@@ -773,146 +895,3 @@ EXEC obtenerPCsLaboratorio '1';
 EXEC actualizarDetalleReporte '1','C-007','Verde','listo';
 
 DROP PROCEDURE actualizarDetalleReporte;
-CREATE PROCEDURE actualizarDetalleReporte(
-								@idReporte int,
-								@idPC  VARCHAR(100),
-								@color VARCHAR(100),
-								@descripcion VARCHAR(100)
-								)
-AS 
-BEGIN	
-	UPDATE detalleReporte
-		SET estadoComputadora = @color,
-			descripcion = @descripcion
-		WHERE idReporte = @idReporte AND codigoComputadora = @idPC;
-END
-
-
-DROP PROCEDURE crearPc
-CREATE PROCEDURE crearPc(
-								@idPC VARCHAR(100),
-								@x  VARCHAR(100),
-								@y VARCHAR(100),
-								@nombreLab VARCHAR(100)
-								)
-AS 
-BEGIN TRY
-  INSERT into computadora(codigo,posicionX,posicionY,establecimiento) 
-	values	(@idPC,@x ,@y,@nombreLab);
-END TRY
-BEGIN CATCH
-  IF ERROR_NUMBER() = 2627
-    UPDATE computadora
-		SET posicionX = @x,
-			posicionY = @y,
-			establecimiento = @nombreLab
-		WHERE codigo = @idPC;
-END CATCH
-
---EXEC crearPc 'IC-1050','100.1','122.2','asd';
-
-CREATE PROCEDURE obtenerLabs
-AS 
-BEGIN		
-	select establecimiento from computadora GROUP BY establecimiento;
-	return
-END;
-
---EXEC obtenerLabs
-------------------------------------------------------------- nuevo..... funciones para push
-
-
-CREATE TABLE usuario_token(
-	nombreUsuario VARCHAR(100) NOT NULL PRIMARY KEY,
-	token VARCHAR(600) NOT NULL,
-	CONSTRAINT FK_usuarioToken_nombreUsuario FOREIGN KEY(nombreUsuario) REFERENCES usuario ON DELETE CASCADE ON UPDATE CASCADE
-)
-
-select * from usuario_token where nombreUsuario='Alvarado'
-
-CREATE PROCEDURE actualizarTokenUsuario(@nombreUsuarioVar varchar(100), @tokenVar varchar(600))
-AS 
-BEGIN	
-	IF (NOT EXISTS(SELECT * FROM usuario_token where nombreUsuario=@nombreUsuarioVar))
-		BEGIN
-			INSERT INTO usuario_token VALUES(@nombreUsuarioVar,@tokenVar);
-		END 
-	ELSE
-	BEGIN
-		UPDATE usuario_token
-						SET token = @tokenVar 
-						WHERE nombreUsuario = @nombreUsuarioVar;
-	END
-END
-
-
-go
-
-
---obtiene el token de un usuario
-
-CREATE PROCEDURE obtenerTokenUsuario(@idReporteVar int)
-as
-begin
-	select nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
-end;
-
-select * from usuariosReporte where idUsuario= 'Alvarado'
-
-
-update reporte set estadoReporte= 'informacion' where id= 3 or id= 4 or id= 5 or id= 6 or id= 7
-exec obtenerTokenAdministradores
-CREATE PROCEDURE obtenerTokenAdministradores
-AS 
-BEGIN	
-	SELECT usuario_token.token FROM usuario_token inner join usuario on (usuario.nombreUsuario= usuario_token.nombreUsuario and
-	usuario.rol= 'Administrador')
-END
-
-
-
-go
-
-
-use mantenimiento
-
-select * from usuario
-use mantenimiento
-
-
-
-
-GO
-CREATE PROCEDURE obtenerTecnicosAsignadosAReporte(
-	@idReporteP int
-)
-AS 
-BEGIN	
-	SELECT u.nombreUsuario,u.contrasena,u.nombre,u.apellido1,u.apellido2,u.correo,u.correo,u.telefono,u.rol, u.activo 
-		FROM usuario AS u inner join usuariosReporte AS ur ON (u.nombreUsuario = ur.idUsuario) 
-		WHERE ur.idReporte = @idReporteP and ur.rol = 'Tecnico'
-END
-
-
-
-GO
-
-
-CREATE PROCEDURE eliminarTecnicosReporte(
-	@idReporteP int
-)
-AS 
-BEGIN	
-	delete usuariosReporte where idReporte=@idReporteP and rol = 'Tecnico';
-END
-
-
-
-
-drop procedure obtenerTecnicosAsignadosAReporte
-select * from usuariosReporte
-
-
-exec obtenerTecnicosAsignadosAReporte 1012
-
-
