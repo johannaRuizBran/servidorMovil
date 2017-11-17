@@ -96,7 +96,7 @@ namespace servidor
 
             //obtener PCs de un laboratorio por id del reporte
             routes.MapRoute(
-                name: "listaPCsDeLaboratorio",
+                name: "listaPCsDeLaboratorioReporte",
                 url: "Computadora/listaPCs/{idReporte}",
                 defaults: new
                 {
@@ -104,7 +104,28 @@ namespace servidor
                     action = "obtenerPCsReporte",
                 }
             );
-            ///1/C-009/Gris/full
+            //obtener PCs de un laboratorio por nombre del laboratorio Reporte
+            routes.MapRoute(
+                name: "ReportelistaPCsDeLaboratorio",
+                url: "ComputadorasLabReporte/listaPCs/{nombreLab}",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "obtenerPCsLab",
+                }
+            );
+
+            //obtener PCs de un laboratorio por nombre del laboratorio
+            routes.MapRoute(
+                name: "listaPCsDeLaboratorio",
+                url: "ComputadorasLabReporte/listaPCsLab/{nombreLab}",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "obtenerlistaPCsLab",
+                }
+            );
+
             //Modificar detalle reporte
             routes.MapRoute(
                 name: "actualizarColorDescripcionPC",
@@ -116,6 +137,27 @@ namespace servidor
                 }
             );
 
+            //Crear una computadora 
+            routes.MapRoute(
+                name: "CrearPc",
+                url: "Computadora/crearPc/{idPC}/{x}/{y}/{nombreLab}",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "crearPc",
+                }
+            );
+
+            //Obtener los nombre de laboratorios 
+            routes.MapRoute(
+                name: "ConsultarLabs",
+                url: "Computadora/listaLabs",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "listaLabs",
+                }
+            );
             /////////////////////////////   Tecnicos    /////////////////////////////////////
             /////////////////////////////////////////////////////////////////////////////////////
 
