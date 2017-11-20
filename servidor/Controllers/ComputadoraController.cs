@@ -44,10 +44,17 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
- 	[HttpPost]
+ 	    [HttpPost]
         public JsonResult crearPc(string idPC, string x, string y, string nombreLab)
         {
             return Json(computadora.crearPc(idPC, x, y,nombreLab),
+                        JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult BorrarPC(string idPC)
+        {
+            return Json(computadora.BorrarPC(idPC),
                         JsonRequestBehavior.AllowGet);
         }
 
