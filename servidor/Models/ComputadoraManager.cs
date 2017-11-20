@@ -78,10 +78,10 @@ namespace servidor.Models
             reader.Close();
             return lista;
         }
-        public List<Computadora1> listaPCsLab(String nombreLab)
+        public List<Computadora_detalle> listaPCsLab(String nombreLab)
         {
-            List<Computadora1> lista = new List<Computadora1>();
-            Computadora1 computadora = null;
+            List<Computadora_detalle> lista = new List<Computadora_detalle>();
+            Computadora_detalle computadora = null;
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
 
@@ -94,7 +94,7 @@ namespace servidor.Models
                 cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
             while (reader.Read())
             {
-                computadora = new Computadora1();
+                computadora = new Computadora_detalle();
                 computadora.id = reader.GetString(0);
                 computadora.x = reader.GetDouble(1);
                 computadora.y = reader.GetDouble(2);

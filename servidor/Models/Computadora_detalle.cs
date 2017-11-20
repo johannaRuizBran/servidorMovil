@@ -5,7 +5,7 @@ using System.Web;
 
 namespace servidor.Models
 {
-    public class Computadora1
+    public class Computadora_detalle
     {
         public string id { get; set; }
         public double x { get; set; }

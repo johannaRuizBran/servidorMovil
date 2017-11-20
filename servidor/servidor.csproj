@@ -123,6 +123,7 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Models\Computadora.cs" />
+    <Compile Include="Models\Computadora_detalle.cs" />
     <Compile Include="Models\ComputadoraManager.cs" />
     <Compile Include="Models\ConexionPush.cs" />
     <Compile Include="Models\informacionFaltante.cs" />
