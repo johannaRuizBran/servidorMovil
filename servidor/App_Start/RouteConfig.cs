@@ -147,6 +147,16 @@ namespace servidor
                     action = "crearPc",
                 }
             );
+            //Borrar una computadora 
+            routes.MapRoute(
+                name: "BorrarPC",
+                url: "Computadora/borrarPC/{idPC}",
+                defaults: new
+                {
+                    controller = "Computadora",
+                    action = "BorrarPC",
+                }
+            );
 
             //Obtener los nombre de laboratorios 
             routes.MapRoute(
