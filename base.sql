@@ -633,6 +633,17 @@ BEGIN
 END;
 
 --EXEC obtenerLabs
+go 
+CREATE PROCEDURE borrarPC(
+								@idPC VARCHAR(100)
+								)
+AS 
+BEGIN		
+	delete computadora where codigo = @idPC;
+	return
+END;
+
+--EXEC borrarPC "C-30"
 ------------------------------------------------------------- nuevo..... funciones para push
 go
 
