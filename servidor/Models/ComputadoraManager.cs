@@ -137,6 +137,18 @@ namespace servidor.Models
             con.Close();
             return (respuestaQuery == 3);
         }
+        public bool BorrarPC(string idPC)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+            string sql = "EXEC borrarPc @idPC;";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idPC", System.Data.SqlDbType.VarChar).Value = idPC;
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 3);
+        }
 
         public List<string> listaLabs()
         {
