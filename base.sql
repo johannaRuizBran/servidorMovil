@@ -609,7 +609,7 @@ END
 
 go
 
-
+--DROP PROCEDURE crearPC
 CREATE PROCEDURE crearPc(
 								@idPC VARCHAR(100),
 								@x  VARCHAR(100),
@@ -617,18 +617,20 @@ CREATE PROCEDURE crearPc(
 								@nombreLab VARCHAR(100)
 								)
 AS 
-BEGIN TRY
-  INSERT into computadora(codigo,posicionX,posicionY,establecimiento) 
-	values	(@idPC,@x ,@y,@nombreLab);
-END TRY
-BEGIN CATCH
-  IF ERROR_NUMBER() = 2627
-    UPDATE computadora
-		SET posicionX = @x,
-			posicionY = @y,
-			establecimiento = @nombreLab
-		WHERE codigo = @idPC;
-END CATCH
+BEGIN 
+	IF @idPC = 'C-'
+		INSERT into computadora(codigo,posicionX,posicionY,establecimiento) 
+			values	(@idPC + cast(((SELECT COUNT(*) FROM computadora)+1) as varchar),@x ,@y,@nombreLab);
+	ELSE
+		UPDATE computadora
+			SET posicionX = @x,
+				posicionY = @y,
+				establecimiento = @nombreLab
+			WHERE codigo = @idPC;
+END 
+
+
+
 
 
 go
