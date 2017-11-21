@@ -579,7 +579,16 @@ BEGIN
 			 select * from detalleReporte as inf inner join computadora as comp on (comp.codigo= inf.codigoComputadora) where inf.idReporte = @idReporte;
 	return
 END;
-
+go
+CREATE PROCEDURE obtenerPCsLaboratorioReporte(
+								@nombreLab VARCHAR(100)
+								)
+AS 
+BEGIN		
+			 --SELECT * FROM computadora WHERE establecimiento=@nombreLab;	
+			 select * from computadora as c where c.establecimiento = @nombreLab;
+	return
+END;
 go
 
 
