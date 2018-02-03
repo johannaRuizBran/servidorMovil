@@ -691,7 +691,7 @@ go
 CREATE PROCEDURE obtenerTokenUsuario(@idReporteVar int)
 as
 begin
-	select nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
+	select TOP 1 nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
 end;
 
 
