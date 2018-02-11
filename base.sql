@@ -720,7 +720,14 @@ BEGIN
 		WHERE ur.idReporte = @idReporteP and ur.rol = 'Tecnico'
 END
 
+go
 
+
+CREATE PROCEDURE obtenerUsuariosNuevos
+as
+begin
+	select * from usuario where activo= 'No'
+end;
 
 GO
 

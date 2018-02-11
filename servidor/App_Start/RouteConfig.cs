@@ -394,6 +394,16 @@ namespace servidor
                 }
             );
 
+            //obtener a todos los usuarios nuevos o sin permiso
+            routes.MapRoute(
+                name: "AccesoNuevoUsuarioSinPermiso",
+                url: "Usuario/obtener/sinPermiso",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "obetenerUsuariosNoPermiso",
+                }
+            );
         }
     }
 }

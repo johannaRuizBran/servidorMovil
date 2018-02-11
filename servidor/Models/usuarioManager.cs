@@ -148,6 +148,37 @@ namespace servidor.Models
         }
 
 
+        public List<Usuario> obetenerUsuariosNoPermiso()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec obtenerUsuariosNuevos";
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            SqlDataReader reader =
+                cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (reader.Read())
+            {
+                Usuario registroUSuario = new Usuario();
+
+                registroUSuario = new Usuario();
+                registroUSuario.nombreUsuario = reader.GetString(0);
+                registroUSuario.contrasena = reader.GetString(1);
+                registroUSuario.nombre = reader.GetString(2);
+                registroUSuario.apellido1 = reader.GetString(3);
+                registroUSuario.apellido2 = reader.GetString(4);
+                registroUSuario.correo = reader.GetString(5);
+                registroUSuario.telefono = reader.GetString(6);
+                registroUSuario.rol = reader.GetString(7);
+                registroUSuario.activo = reader.GetString(8);
+                lista.Add(registroUSuario);
+            }
+            reader.Close();
+            return lista;
+        }
 
 
 

@@ -34,6 +34,13 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult obetenerUsuariosNoPermiso()
+        {
+            return Json(usuarioManager.obetenerUsuariosNoPermiso(),
+                        JsonRequestBehavior.AllowGet);
+        }
+
         //elimina un usuario de la base
         [HttpPost]
         public JsonResult eliminarUsuarioAction(string nombreUsuario)
