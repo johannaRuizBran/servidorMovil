@@ -74,20 +74,6 @@ namespace servidor.Controllers
         }
 
 
-        //cambia el estado activo o inactivo de un usuario
-        public bool cambiarUsuarioPermiso(string nombreUsuario)
-        {
-            SqlConnection con = new SqlConnection(conexionIP);
-            con.Open();
-
-            string sql = "exec cambiar @idUsuarioV";
-            SqlCommand cmd = new SqlCommand(sql, con);
-            cmd.Parameters.Add("@idUsuarioV", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
-            int respuestaQuery = cmd.ExecuteNonQuery();
-
-            con.Close();
-            return (respuestaQuery == 1);
-        }
 
 
         [HttpGet]

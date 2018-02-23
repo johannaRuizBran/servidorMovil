@@ -946,12 +946,15 @@ DROP PROCEDURE actualizarDetalleReporte;
 
 go
 
+
+
 CREATE PROCEDURE cambiarActivo(@idUsuarioV varchar(100))
 AS 
 BEGIN	
-	UPDATE usuario SET activo= 'Activo' WHERE @idUsuarioV = nombreUsuario
+	UPDATE usuario SET activo= 'Si' WHERE @idUsuarioV = nombreUsuario
 END
 
+go
 
 CREATE PROCEDURE loginUser(@nombreU varchar(100), @contr varchar(600))
 AS 
