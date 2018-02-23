@@ -683,8 +683,7 @@ BEGIN
 END
 
 
-go
-
+GO
 
 --obtiene el token de un usuario
 
@@ -694,8 +693,17 @@ begin
 	select TOP 1 nombreUsuario,token from usuariosReporte as ur inner join usuario_token as ut on (ur.idUsuario= ut.nombreUsuario);
 end;
 
+GO
 
-go
+
+--obtiene el token de un usuario tecnico segun su username
+CREATE PROCEDURE OBTENER_TOKEN_TECNICO(@username VARCHAR(200))
+as
+begin
+	select token FROM usuario_token WHERE nombreUsuario = @username;
+end;
+
+GO
 
 
 CREATE PROCEDURE obtenerTokenAdministradores
