@@ -940,3 +940,25 @@ EXEC obtenerPCsLaboratorio '1';
 EXEC actualizarDetalleReporte '1','C-007','Verde','listo';
 
 DROP PROCEDURE actualizarDetalleReporte;
+
+
+--					FUNCIONES NUEVAS
+
+go
+
+CREATE PROCEDURE cambiarActivo(@idUsuarioV varchar(100))
+AS 
+BEGIN	
+	UPDATE usuario SET activo= 'Activo' WHERE @idUsuarioV = nombreUsuario
+END
+
+
+CREATE PROCEDURE loginUser(@nombreU varchar(100), @contr varchar(600))
+AS 
+BEGIN	
+	SELECT * FROM usuario WHERE nombreUsuario = @nombreU and contrasena= @contr and activo= 'Si'
+END
+
+------------------------------------------------------------------------
+
+

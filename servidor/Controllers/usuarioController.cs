@@ -66,6 +66,30 @@ namespace servidor.Controllers
             return Json(new { Error = true, Message = "Operación HTTP desconocida" });
         }
 
+        //cambiar estado de usuario a activo
+        [HttpPost]
+        public JsonResult cambiarUsuarioPermiso(string nombreUsuario)
+        {
+            return Json(usuarioManager.cambiarUsuarioPermiso(nombreUsuario));
+        }
+
+
+        //cambia el estado activo o inactivo de un usuario
+        public bool cambiarUsuarioPermiso(string nombreUsuario)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec cambiar @idUsuarioV";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idUsuarioV", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 1);
+        }
+
+
         [HttpGet]
         public JsonResult obtenerUsuarioInf(string nombreU, Usuario item)
         {

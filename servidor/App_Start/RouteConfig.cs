@@ -80,6 +80,16 @@ namespace servidor
                 }
             );
 
+            //activar usuarios
+            routes.MapRoute(
+                name: "AccesoNuevoUsuarioActivar",
+                url: "Usuario/cambiarActivo/{nombreUsuario}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "cambiarUsuarioPermiso",
+                }
+            );
 
             //informacion de una persona
             routes.MapRoute(

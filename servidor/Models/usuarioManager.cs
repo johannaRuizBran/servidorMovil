@@ -56,6 +56,22 @@ namespace servidor.Models
             return (respuestaQuery == 1) ;
         }
 
+        //cambia el estado activo o inactivo de un usuario
+        public bool cambiarUsuarioPermiso(string nombreUsuario)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec cambiarActivo @idUsuarioV";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idUsuarioV", System.Data.SqlDbType.VarChar).Value = nombreUsuario;
+            int respuestaQuery = cmd.ExecuteNonQuery();
+
+            con.Close();
+            return (respuestaQuery == 1);
+        }
+
+
 
 
         //obtiene la informacion de los usuarios (permite el filtro por tipo de usuario)
@@ -211,7 +227,7 @@ namespace servidor.Models
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
 
-            string sql = "select * from usuario where nombreUsuario = @nombreU and contrasena= @contr";
+            string sql = "exec loginUser @nombreU, @contr";
             SqlCommand cmd = new SqlCommand(sql, con);
             cmd.Parameters.Add("@nombreU", System.Data.SqlDbType.VarChar).Value = nombreU;
             cmd.Parameters.Add("@contr", System.Data.SqlDbType.VarChar).Value = contr;
