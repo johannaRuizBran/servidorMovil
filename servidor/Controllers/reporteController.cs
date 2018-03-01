@@ -88,10 +88,11 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+        //crear enlace de reporte con computadoras
         [HttpPost]
-        public JsonResult cambiarEstadoReporte(int idReporte, string estado)
+        public JsonResult crearEnlaceReporteALaboratorio(string idUsuario)
         {
-            return Json(reporte.cambiarEstadoReporte(idReporte, estado),
+            return Json(reporte.crearEnlaceReporteALaboratorio(idUsuario),
                         JsonRequestBehavior.AllowGet);
         }
     }

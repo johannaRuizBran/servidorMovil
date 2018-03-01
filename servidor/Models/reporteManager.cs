@@ -292,13 +292,13 @@ namespace servidor.Models
 
 
         // asigna un tecnico a un reporte
-        public bool crearEnlaceReporteALaboratorio(int idReporte)
+        public bool crearEnlaceReporteALaboratorio(string idUsuario)
         {
             SqlConnection con = new SqlConnection(conexionIP);
             con.Open();
-            string sql = "EXEC insertarDetalleReporte  @idReporte";
+            string sql = "EXEC crearEnlaceLabreporte  @idUsuario";
             SqlCommand cmd = new SqlCommand(sql, con);
-            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+            cmd.Parameters.Add("@idUsuario", System.Data.SqlDbType.VarChar).Value = idUsuario;
             int respuestaQuery = cmd.ExecuteNonQuery();
             con.Close();
             return (respuestaQuery == 1);

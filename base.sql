@@ -347,8 +347,6 @@ END;
 
 GO
 
-exec crearEnlaceLabreporte 'Alvarado'
-
 CREATE PROCEDURE crearEnlaceLabreporte(	
 								@idUsuarioVar VARCHAR(100))
 as
@@ -364,6 +362,7 @@ END;
 
 go 
 
+select * from detalleReporte
 
 --crear detalleReporte
 CREATE PROCEDURE insertarDetalleReporte(
@@ -709,6 +708,7 @@ begin
 end;
 
 GO
+
 
 
 --obtiene el token de un usuario tecnico segun su username

@@ -210,7 +210,7 @@ namespace servidor
             //Crear enlace reporte a computadoras de laboratorio seleccionado
             routes.MapRoute(
                 name: "CrearEnlaceReporteALab",
-                url: "Reporte/crearEnlaceLab/{idReporte}",
+                url: "Reporte/crearEnlaceLab/{idUsuario}",
                 defaults: new
                 {
                     controller = "reporte",
