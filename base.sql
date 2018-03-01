@@ -347,6 +347,20 @@ END;
 
 GO
 
+CREATE PROCEDURE crearEnlaceLabreporte(	
+								@idUsuarioVar VARCHAR(100))
+as
+DECLARE
+	@idReporte int
+		
+BEGIN
+	set @idReporte = (SELECT TOP 1 id FROM reporte inner join usuariosReporte 
+		on (usuariosReporte.idUsuario = @idUsuarioVar) ORDER BY id DESC)
+
+	exec insertarDetalleReporte @idReporte
+END;
+
+GO
 
 --FUNCIONES DETALLE REPORTE
 
@@ -962,7 +976,7 @@ EXEC actualizarDetalleReporte '1','C-007','Verde','listo';
 DROP PROCEDURE actualizarDetalleReporte;
 
 
---					FUNCIONES NUEVAS
+--					FUNCIONES NUEVAS 22/02/2018
 
 go
 
