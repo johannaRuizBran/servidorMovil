@@ -347,8 +347,23 @@ END;
 
 GO
 
+exec crearEnlaceLabreporte 'Alvarado'
 
---FUNCIONES DETALLE REPORTE
+CREATE PROCEDURE crearEnlaceLabreporte(	
+								@idUsuarioVar VARCHAR(100))
+as
+DECLARE
+	@idReporte int
+		
+BEGIN
+	set @idReporte = (SELECT TOP 1 id FROM reporte inner join usuariosReporte 
+		on (usuariosReporte.idUsuario = @idUsuarioVar) ORDER BY id DESC)
+
+	exec insertarDetalleReporte @idReporte
+END;
+
+go 
+
 
 --crear detalleReporte
 CREATE PROCEDURE insertarDetalleReporte(
@@ -832,7 +847,7 @@ select * from usuariosReporte
 exec insertarDetalleReporte '3'
 
 
-SELECT * FROM detalleReporte
+SELECT * FROM computadora
 
 
 --insetar computadoras
@@ -950,10 +965,9 @@ EXEC actualizarDetalleReporte '1','C-007','Verde','listo';
 DROP PROCEDURE actualizarDetalleReporte;
 
 
---					FUNCIONES NUEVAS
+--					FUNCIONES NUEVAS 22/02/2018
 
 go
-
 
 
 CREATE PROCEDURE cambiarActivo(@idUsuarioV varchar(100))

@@ -88,5 +88,11 @@ namespace servidor.Controllers
                         JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult cambiarEstadoReporte(int idReporte, string estado)
+        {
+            return Json(reporte.cambiarEstadoReporte(idReporte, estado),
+                        JsonRequestBehavior.AllowGet);
+        }
     }
 }

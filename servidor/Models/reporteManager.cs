@@ -288,5 +288,20 @@ namespace servidor.Models
             con.Close();
             return (respuestaQuery == 1);
         }
+
+
+
+        // asigna un tecnico a un reporte
+        public bool crearEnlaceReporteALaboratorio(int idReporte)
+        {
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+            string sql = "EXEC insertarDetalleReporte  @idReporte";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+            int respuestaQuery = cmd.ExecuteNonQuery();
+            con.Close();
+            return (respuestaQuery == 1);
+        }
     }
 }

@@ -205,6 +205,19 @@ namespace servidor
                 }
             );
 
+
+
+            //Crear enlace reporte a computadoras de laboratorio seleccionado
+            routes.MapRoute(
+                name: "CrearEnlaceReporteALab",
+                url: "Reporte/crearEnlaceLab/{idReporte}",
+                defaults: new
+                {
+                    controller = "reporte",
+                    action = "crearEnlaceReporteALaboratorio",
+                }
+            );
+
             //obtener todos los reportes que ha hecho una persona
             routes.MapRoute(
                 name: "listaDeMisreportes",
