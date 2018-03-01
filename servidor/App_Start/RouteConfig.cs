@@ -427,6 +427,33 @@ namespace servidor
                     action = "obetenerUsuariosNoPermiso",
                 }
             );
+
+
+
+            //NUEVO
+
+            //funcion: OBTENER_TOKEN_USUARIO-> obtiene el token de un usuario segun el username
+            routes.MapRoute(
+                name: "AccesoObtenerTokenUsuarioUsernameAction",
+                url: "Usuarios/obtenerTokenUsuarioUsername/{username}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "obtenerTokenUsuarioUsernameAction",
+                }
+            );
+
+
+            // OBTIENE UNA LISTA DE TOKENS DE TODOS LOS TECNICOS ASIGNADOS A UN REPORTE
+            routes.MapRoute(
+                name: "AccesoObtenerListaTokenTecnicos",
+                url: "Usuarios/obtenerListaTokenTecnicos/{idReporte}",
+                defaults: new
+                {
+                    controller = "usuario",
+                    action = "obtenerListaTokenTecnicosAction",
+                }
+            );
         }
     }
 }

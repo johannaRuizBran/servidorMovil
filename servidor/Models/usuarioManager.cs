@@ -444,5 +444,53 @@ namespace servidor.Models
             return lista;
         }
 
+
+        //NUEVO
+
+        // obtiene el token de un tecnico, por medio del username devuelve el token
+
+        public string obtenerTokenUsuarioUsername(string username)
+        {
+            string token = null;
+
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec OBTENER_TOKEN_USUARIO @username";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@username", System.Data.SqlDbType.VarChar).Value = username;
+            SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            if (reader.Read())
+            {
+                token = reader.GetString(0);
+            }
+            reader.Close();
+            return token;
+        }
+
+
+
+        //obtiene todos los tokens de los tecnicos que estan relacionados o se les han asignado un reporte especifico
+        public List<string> obtenerListaTokenTecnicos(int idReporte)
+        {
+            List<string> lista = new List<string>();
+            SqlConnection con = new SqlConnection(conexionIP);
+            con.Open();
+
+            string sql = "exec TOKENS_TECNICOS_REPORTE @idReporte";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.Add("@idReporte", System.Data.SqlDbType.Int).Value = idReporte;
+            SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+
+            while (reader.Read())
+            {
+                lista.Add(reader.GetString(0));
+            }
+            reader.Close();
+            return lista;
+
+        }
+
     }
 }

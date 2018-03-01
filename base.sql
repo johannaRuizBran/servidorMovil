@@ -360,9 +360,11 @@ BEGIN
 	exec insertarDetalleReporte @idReporte
 END;
 
-go 
+GO
 
-select * from detalleReporte
+
+--FUNCIONES DETALLE REPORTE
+
 
 --crear detalleReporte
 CREATE PROCEDURE insertarDetalleReporte(
@@ -710,9 +712,9 @@ end;
 GO
 
 
+--obtiene el token de un usuario segun su username
 
---obtiene el token de un usuario tecnico segun su username
-CREATE PROCEDURE OBTENER_TOKEN_TECNICO(@username VARCHAR(200))
+CREATE PROCEDURE OBTENER_TOKEN_USUARIO(@username VARCHAR(200))
 as
 begin
 	select token FROM usuario_token WHERE nombreUsuario = @username;
@@ -720,6 +722,17 @@ end;
 
 GO
 
+
+
+CREATE PROCEDURE TOKENS_TECNICOS_REPORTE(@idReporte int)
+as
+begin
+	select ut.token FROM usuariosReporte as ur inner join usuario_token as ut on(ur.idUsuario = ut.nombreUsuario) 
+	where ur.idReporte = @idReporte and ur.rol = 'Tecnico';
+end;
+
+
+GO
 
 CREATE PROCEDURE obtenerTokenAdministradores
 AS 
@@ -847,7 +860,7 @@ select * from usuariosReporte
 exec insertarDetalleReporte '3'
 
 
-SELECT * FROM computadora
+SELECT * FROM detalleReporte
 
 
 --insetar computadoras
@@ -968,6 +981,7 @@ DROP PROCEDURE actualizarDetalleReporte;
 --					FUNCIONES NUEVAS 22/02/2018
 
 go
+
 
 
 CREATE PROCEDURE cambiarActivo(@idUsuarioV varchar(100))

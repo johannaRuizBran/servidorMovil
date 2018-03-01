@@ -134,7 +134,28 @@ namespace servidor.Controllers
         {
             return Json(usuarioManager.eliminarTecnicosReporte(idReporte));
         }
-        
+
+
+        //NUEVO
+
+        //obtener el token de un tecnico (segun el nombre de usuario enviado)
+        [HttpGet]
+        public JsonResult obtenerTokenUsuarioUsernameAction(string username)
+        {
+            return Json(usuarioManager.obtenerTokenUsuarioUsername(username),
+                        JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        //obtiene la lista de tokenx de los diferentes tecnicos asignados a un reporte
+        [HttpGet]
+        public JsonResult obtenerListaTokenTecnicosAction(int idReporte)
+        {
+            return Json(usuarioManager.obtenerListaTokenTecnicos(idReporte),
+                JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
